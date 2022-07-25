@@ -19,8 +19,6 @@ const userRoutes = require('./routes/users');
 const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
 
-var favicon = require('serve-favicon');
-
 const MongoDBStore = require("connect-mongo")(session);
 
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/yelp-camp';
@@ -43,7 +41,6 @@ const app = express();
 app.engine('ejs', ejsMate)
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
-app.use(favicon(__dirname + '/public/images/favicon.ico'));
 
 
 app.use(express.urlencoded({ extended: true }));
