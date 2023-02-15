@@ -1,4 +1,4 @@
-# [campMaDrs](https://campMaDrs.onrender.com/)
+# [campMaDrs](https://campmadrs.madr.io/)
 
 _Note: The Node app takes some time to wake up. Give it a minute._
 
