@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "name": "camp=madrs",
+  "builds": [
+    { "src": "script.js", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "/index.js" }
+  ]
+}
