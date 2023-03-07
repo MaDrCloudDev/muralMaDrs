@@ -42,3 +42,7 @@ body {
 	text-decoration: none;
 	color: rgba(255, 255, 255, 0.5);
 }
+
+.copylink:hover {
+	color: #ab00fe;
+}
