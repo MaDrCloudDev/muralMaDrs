@@ -29,8 +29,16 @@ body {
 	border-bottom-color: white;
 }
 
-.btn-secondary,
-.btn-secondary:hover {
+.btn-secondary {
 	color: #333;
 	text-shadow: none;
+}
+.btn-secondary:hover {
+	color: #ab00fe;
+	text-shadow: none;
+}
+
+.copylink {
+	text-decoration: none;
+	color: rgba(255, 255, 255, 0.5);
 }
