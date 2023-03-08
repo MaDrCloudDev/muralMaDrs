@@ -15,6 +15,7 @@
 
 .logincontainer {
 	height: 100%;
+	margin-top: 10px;
 }
 
 .registercontainer {
@@ -36,5 +37,6 @@
 
 .showcontainer {
 	height: 100%;
+	margin-top: 10px;
 	margin-bottom: 60px;
 }

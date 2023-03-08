@@ -3,7 +3,7 @@
 	rel="stylesheet"
 	href="/stylesheets/stars.css" />
 <div class="showcontainer row">
-	<div class="col-6">
+	<div class="col-12">
 		<div
 			id="campgroundCarousel"
 			class="carousel slide"
@@ -49,10 +49,10 @@
 			</div>
 			<ul class="list-group list-group-flush">
 				<li class="list-group-item text-muted"><%= campground.location%></li>
+				<li class="list-group-item">Artists: <%= campground.artist%></li>
 				<li class="list-group-item">
 					Submitted by <%= campground.author.username%>
 				</li>
-				<li class="list-group-item">$<%= campground.price%>/optional</li>
 			</ul>
 			<% if( currentUser && campground.author.equals(currentUser._id)) {%>
 			<div class="card-body">
@@ -72,7 +72,7 @@
 			<div class="card-footer text-muted">2 days ago</div>
 		</div>
 	</div>
-	<div class="col-6">
+	<div class="col-12">
 		<div id="map"></div>
 
 		<% if(currentUser){ %>

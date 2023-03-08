@@ -96,7 +96,7 @@
 .starability-basic .starability-focus-ring {
 	position: absolute;
 	left: 0;
-	width: 100%;
+	width: 150%;
 	height: 30px;
 	outline: 2px dotted #999;
 	pointer-events: none;
