@@ -1,6 +1,6 @@
 <% layout('layouts/boilerplate')%>
 <div id="cluster-map"></div>
-<div class="container">
+<div class="muralscontainer container">
 	<h1>All murals</h1>
 	<% for (let campground of campgrounds){%>
 	<div class="card mb-3">
@@ -28,7 +28,7 @@
 						<small class="text-muted"><%= campground.location%></small>
 					</p>
 					<a
-						class="btn btn-primary"
+						class="btn btn-dark"
 						href="/campgrounds/<%=campground._id%>"
 						>View <%=campground.title%></a
 					>
