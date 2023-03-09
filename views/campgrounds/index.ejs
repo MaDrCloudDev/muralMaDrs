@@ -41,6 +41,11 @@
 <script>
 	const mapToken = '<%-process.env.MAPBOX_TOKEN%>';
 	const campgrounds = { features: <%- JSON.stringify(campgrounds) %>}
+
+	// filter campgrounds by state using ejs and javascript
+	let selectedState = 'Arizona'
+
+	const state = { features: <%- JSON.stringify(campgrounds.filter(campground => campground.location.includes('arizona'))) %>}
 </script>
 
 <script src="/javascripts/clusterMap.js"></script>
