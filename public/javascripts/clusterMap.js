@@ -1,6 +1,6 @@
 mapboxgl.accessToken = mapToken;
 const map = new mapboxgl.Map({
-	container: "cluster-map",
+	container: "mymap",
 	style: "mapbox://styles/mapbox/light-v10",
 	center: [-103.59179687498357, 40.66995747013945],
 	zoom: 3,
@@ -21,6 +21,8 @@ map.on("load", function () {
 		clusterMaxZoom: 14, // Max zoom to cluster points on
 		clusterRadius: 50, // Radius of each cluster when clustering points (defaults to 50)
 	});
+
+	console.log(campgrounds);
 
 	map.addLayer({
 		id: "clusters",
@@ -65,7 +67,7 @@ map.on("load", function () {
 		filter: ["!", ["has", "point_count"]],
 		paint: {
 			"circle-color": "#11b4da",
-			"circle-radius": 4,
+			"circle-radius": 8,
 			"circle-stroke-width": 1,
 			"circle-stroke-color": "#fff",
 		},
