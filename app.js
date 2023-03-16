@@ -17,7 +17,7 @@ const User = require("./models/user");
 const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
 const userRoutes = require("./routes/users");
-const campgroundRoutes = require("./routes/campgrounds");
+const muralRoutes = require("./routes/murals");
 const reviewRoutes = require("./routes/reviews");
 
 // var favicon = require('serve-favicon');
@@ -144,8 +144,8 @@ app.use((req, res, next) => {
 });
 
 app.use("/", userRoutes);
-app.use("/campgrounds", campgroundRoutes);
-app.use("/campgrounds/:id/reviews", reviewRoutes);
+app.use("/murals", muralRoutes);
+app.use("/murals/:id/reviews", reviewRoutes);
 
 app.get("/", (req, res) => {
 	res.render("home");

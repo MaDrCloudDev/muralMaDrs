@@ -5,11 +5,11 @@
 <div class="showcontainer row">
 	<div class="col-12">
 		<div
-			id="campgroundCarousel"
+			id="muralCarousel"
 			class="carousel slide"
 			data-ride="carousel">
 			<div class="carousel-inner">
-				<% campground.images.forEach((img, i) => { %>
+				<% mural.images.forEach((img, i) => { %>
 				<div class="carousel-item <%= i === 0 ? 'active' : ''%>">
 					<img
 						src="<%= img.url%>"
@@ -18,10 +18,10 @@
 				</div>
 				<% }) %>
 			</div>
-			<% if(campground.images.length > 1) {%>
+			<% if(mural.images.length > 1) {%>
 			<a
 				class="carousel-control-prev"
-				href="#campgroundCarousel"
+				href="#muralCarousel"
 				role="button"
 				data-slide="prev">
 				<span
@@ -31,7 +31,7 @@
 			</a>
 			<a
 				class="carousel-control-next"
-				href="#campgroundCarousel"
+				href="#muralCarousel"
 				role="button"
 				data-slide="next">
 				<span
@@ -44,26 +44,26 @@
 
 		<div class="card mb-3">
 			<div class="card-body">
-				<h5 class="card-title"><%= campground.title%></h5>
-				<p class="card-text"><%= campground.description%></p>
+				<h5 class="card-title"><%= mural.title%></h5>
+				<p class="card-text"><%= mural.description%></p>
 			</div>
 			<ul class="list-group list-group-flush">
-				<li class="list-group-item text-muted"><%= campground.location%></li>
-				<li class="list-group-item">Artists: <%= campground.artist%></li>
+				<li class="list-group-item text-muted"><%= mural.location%></li>
+				<li class="list-group-item">Artists: <%= mural.artist%></li>
 				<li class="list-group-item">
-					Submitted by <%= campground.author.username%>
+					Submitted by <%= mural.author.username%>
 				</li>
 			</ul>
-			<% if( currentUser && campground.author.equals(currentUser._id)) {%>
+			<% if( currentUser && mural.author.equals(currentUser._id)) {%>
 			<div class="card-body">
 				<a
 					class="card-link btn btn-info"
-					href="/campgrounds/<%=campground._id%>/edit"
+					href="/murals/<%=mural._id%>/edit"
 					>Edit</a
 				>
 				<form
 					class="d-inline"
-					action="/campgrounds/<%=campground._id%>?_method=DELETE"
+					action="/murals/<%=mural._id%>?_method=DELETE"
 					method="POST">
 					<button class="btn btn-danger">Delete</button>
 				</form>
@@ -78,7 +78,7 @@
 		<% if(currentUser){ %>
 		<h2>Leave a Review</h2>
 		<form
-			action="/campgrounds/<%=campground._id%>/reviews"
+			action="/murals/<%=mural._id%>/reviews"
 			method="POST"
 			class="mb-3 validated-form"
 			novalidate>
@@ -163,7 +163,7 @@
 			</div>
 			<button class="btn btn-success">Submit</button>
 		</form>
-		<% } %> <% for(let review of campground.reviews) { %>
+		<% } %> <% for(let review of mural.reviews) { %>
 		<div class="card mb-3">
 			<div class="card-body">
 				<h5 class="card-title"><%= review.author.username%></h5>
@@ -176,7 +176,7 @@
 				<p class="card-text">Review: <%= review.body %></p>
 				<% if( currentUser && review.author.equals(currentUser._id)) {%>
 				<form
-					action="/campgrounds/<%=campground._id%>/reviews/<%=review._id%>?_method=DELETE"
+					action="/murals/<%=mural._id%>/reviews/<%=review._id%>?_method=DELETE"
 					method="POST">
 					<button class="btn btn-sm btn-danger">Delete</button>
 				</form>
@@ -189,7 +189,7 @@
 
 <script>
 	const mapToken = '<%-process.env.MAPBOX_TOKEN%>';
-	const campground = <%- JSON.stringify(campground) %>
+	const mural = <%- JSON.stringify(mural) %>
 </script>
 
 <script src="/javascripts/showPageMap.js"></script>

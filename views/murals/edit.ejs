@@ -1,9 +1,9 @@
 <% layout('layouts/boilerplate')%>
-<div class="row">
-	<h1 class="text-center">New Mural</h1>
+<div class="editmuralcontainer row">
+	<h1 class="text-center">Edit mural</h1>
 	<div class="col-md-6 offset-md-3">
 		<form
-			action="/campgrounds"
+			action="/murals/<%=mural._id%>?_method=PUT"
 			method="POST"
 			novalidate
 			class="validated-form"
@@ -18,7 +18,8 @@
 					class="form-control"
 					type="text"
 					id="title"
-					name="campground[title]"
+					name="mural[title]"
+					value="<%=mural.title %>"
 					required />
 				<div class="valid-feedback">Looks good!</div>
 			</div>
@@ -26,13 +27,14 @@
 				<label
 					class="form-label"
 					for="artist"
-					>Artist(s)</label
+					>Artist</label
 				>
 				<input
 					class="form-control"
 					type="text"
 					id="artist"
-					name="campground[artist]"
+					name="mural[artist]"
+					value="<%=mural.artist %>"
 					required />
 				<div class="valid-feedback">Looks good!</div>
 			</div>
@@ -46,7 +48,8 @@
 					class="form-control"
 					type="text"
 					id="location"
-					name="campground[location]"
+					name="mural[location]"
+					value="<%=mural.location %>"
 					required />
 				<div class="valid-feedback">Looks good!</div>
 			</div>
@@ -60,8 +63,10 @@
 					class="form-control"
 					type="text"
 					id="description"
-					name="campground[description]"
-					required></textarea>
+					name="mural[description]"
+					required>
+<%= mural.description%></textarea
+				>
 				<div class="valid-feedback">Looks good!</div>
 			</div>
 			<div class="mb-3">
@@ -76,16 +81,33 @@
 						class="form-file-label"
 						for="image">
 						<span class="form-file-text custom-file-label"
-							>Choose image(s)...</span
+							>Add more image(s)...</span
 						>
 						<span class="form-file-button">Browse</span>
 					</label>
 				</div>
 			</div>
 			<div class="mb-3">
-				<button class="btn btn-success">Add mural</button>
+				<% mural.images.forEach(function(img, i) { %>
+
+				<img
+					src="<%=img.thumbnail %>"
+					class="img-thumbnail"
+					alt="" />
+				<div class="form-check-inline">
+					<input
+						type="checkbox"
+						id="image-<%=i%>"
+						name="deleteImages[]"
+						value="<%=img.filename%>" />
+				</div>
+				<label for="image-<%=i%>">Delete?</label>
+				<% })%>
+			</div>
+			<div class="mb-3">
+				<button class="btn btn-info">Update mural</button>
 			</div>
 		</form>
-		<a href="/campgrounds">All murals</a>
+		<a href="/murals/<%= mural._id%>">Back to mural</a>
 	</div>
 </div>
