@@ -11,6 +11,11 @@
 .copylink {
 	text-decoration: none;
 	color: rgba(255, 255, 255, 0.5);
+	text-shadow: #000 1px 0 10px;
+}
+
+.copylink:hover {
+	color: #ab00fe;
 }
 
 .logincontainer {

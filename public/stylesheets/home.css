@@ -69,3 +69,7 @@ body {
 	color: white;
 	font-weight: 600;
 }
+
+.logo:hover {
+	color: #ab00fe;
+}
