@@ -8,6 +8,7 @@ Model-view-controller. Node-Express app, with Bootstrap components, EJS and CSS 
 
 ```
 // set up .env
+// DB_URL='MongoDB Atlas URL'
 
 npm i
 npm run start
