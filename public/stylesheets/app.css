@@ -1,55 +1,59 @@
+body {
+  background-color: #cad2d3;
+}
+
 #mymap {
-	width: 100%;
-	height: 500px;
+  width: 100%;
+  height: 500px;
 }
 
 #map {
-	width: 100%;
-	height: 300px;
+  width: 100%;
+  height: 300px;
 }
 
 .copylink {
-	text-decoration: none;
-	color: rgba(255, 255, 255, 0.5);
-	text-shadow: #000 1px 0 10px;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.5);
+  text-shadow: #000 1px 0 10px;
 }
 
 .copylink:hover {
-	color: #ab00fe;
+  color: #ab00fe;
 }
 
 .logincontainer {
-	height: 100%;
-	margin-top: 10px;
+  height: 100%;
+  margin-top: 10px;
 }
 
 .registercontainer {
-	height: 100%;
+  height: 100%;
 }
 
 .footer {
-	position: fixed;
-	bottom: 0;
-	width: 100%;
-	height: 60px;
-	background-color: #f5f5f5;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  background-color: #f5f5f5;
 }
 
 .muralscontainer {
-	height: 100%;
-	margin-bottom: 60px;
+  height: 100%;
+  margin-bottom: 60px;
 }
 
 .showcontainer {
-	height: 100%;
-	margin-top: 10px;
-	margin-bottom: 60px;
+  height: 100%;
+  margin-top: 10px;
+  margin-bottom: 60px;
 }
 
 .editmuralcontainer {
-	margin-bottom: 60px;
+  margin-bottom: 60px;
 }
 
 .coordinatescontainer {
-	display: flex;
+  display: flex;
 }
