@@ -1,10 +1,25 @@
 {
   "version": 2,
-  "name": "camp=madrs",
+  "name": "mural-madrs",
   "builds": [
-    { "src": "app.js", "use": "@vercel/node" }
+    { 
+      "src": "app.js", 
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["views/**", "public/**"]
+      }
+    }
   ],
   "routes": [
+    { "src": "/public/(.*)", "dest": "/public/$1" },
     { "src": "/(.*)", "dest": "/app.js" }
-  ]
+  ],
+  "functions": {
+    "app.js": {
+      "includeFiles": "views/**"
+    }
+  },
+  "env": {
+    "NODE_ENV": "production"
+  }
 }
