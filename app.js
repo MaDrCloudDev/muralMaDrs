@@ -53,12 +53,17 @@ const secret = process.env.SECRET || "thisshouldbeabettersecret!";
 const store = MongoStore.create({
   mongoUrl: dbUrl,
   touchAfter: 24 * 3600,
-  crypto: {
-    secret, // Ensure consistent encryption
-  },
+  // Disable encryption to avoid decryption errors
+  crypto: false,
 });
 
-store.on("error", (e) => console.error("SESSION STORE ERROR", e));
+store.on("error", (e) => {
+  console.error("SESSION STORE ERROR", e);
+  // Skip invalid sessions to prevent crashes
+  if (e.message.includes("Unable to parse ciphertext object")) {
+    console.warn("Skipping invalid session data");
+  }
+});
 store.on("create", (sid) => console.log("Session created with ID:", sid));
 
 const sessionConfig = {
