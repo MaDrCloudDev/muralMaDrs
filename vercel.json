@@ -3,7 +3,7 @@
   "name": "mural-madrs",
   "functions": {
     "app.js": {
-      "includeFiles": ["views/**", "public/**"]
+    "includeFiles": "views/**"
     }
   },
   "routes": [
