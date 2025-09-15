@@ -57,15 +57,6 @@ const secret = process.env.SECRET || "thisshouldbeabettersecret!";
 const store = MongoStore.create({
 	mongoUrl: dbUrl,
 	touchAfter: 24 * 3600, // lazy session update
-	secret,
-	resave: false,
-	saveUninitialized: true,
-	cookie: {
-		httpOnly: true,
-		secure: process.env.NODE_ENV === "production",
-		expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
-		maxAge: 1000 * 60 * 60 * 24 * 7,
-	},
 });
 
 store.on("error", (e) => {
@@ -134,27 +125,27 @@ app.use(
 	})
 );
 
-app.use(passport.initialize());
-app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
-
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use((req, res, next) => {
-	res.locals.currentUser = req.user;
+	res.locals.currentUser = req.user || null;
 	res.locals.success = req.flash("success");
 	res.locals.error = req.flash("error");
 	next();
 });
 
+app.get("/", (req, res) => {
+	res.render("home", { currentUser: req.user || null });
+});
+
 app.use("/", userRoutes);
 app.use("/murals", muralRoutes);
 app.use("/murals/:id/reviews", reviewRoutes);
-
-app.get("/", (req, res) => {
-	res.render("home");
-});
 
 app.all("*", (req, res, next) => {
 	next(new ExpressError("Page Not Found", 404));
