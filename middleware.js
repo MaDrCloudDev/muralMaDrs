@@ -1,9 +1,9 @@
-const { muralSchema, reviewSchema } = require("./schemas.js");
-const ExpressError = require("./utils/ExpressError");
-const Mural = require("./models/murals");
-const Review = require("./models/review");
+import { muralSchema, reviewSchema } from "./schemas.js";
+import ExpressError from "./utils/ExpressError.js";
+import Mural from "./models/murals.js";
+import Review from "./models/review.js";
 
-module.exports.isLoggedIn = (req, res, next) => {
+export const isLoggedIn = (req, res, next) => {
 	if (!req.isAuthenticated()) {
 		req.session.returnTo = req.originalUrl;
 		req.flash("error", "You must be signed in first!");
@@ -12,9 +12,8 @@ module.exports.isLoggedIn = (req, res, next) => {
 	next();
 };
 
-module.exports.validatemural = (req, res, next) => {
+export const validatemural = (req, res, next) => {
 	const { error } = muralSchema.validate(req.body);
-	console.log(req.body);
 	if (error) {
 		const msg = error.details.map((el) => el.message).join(",");
 		throw new ExpressError(msg, 400);
@@ -23,7 +22,7 @@ module.exports.validatemural = (req, res, next) => {
 	}
 };
 
-module.exports.isAuthor = async (req, res, next) => {
+export const isAuthor = async (req, res, next) => {
 	const { id } = req.params;
 	const mural = await Mural.findById(id);
 	if (!mural.author.equals(req.user._id)) {
@@ -33,7 +32,7 @@ module.exports.isAuthor = async (req, res, next) => {
 	next();
 };
 
-module.exports.isReviewAuthor = async (req, res, next) => {
+export const isReviewAuthor = async (req, res, next) => {
 	const { id, reviewId } = req.params;
 	const review = await Review.findById(reviewId);
 	if (!review.author.equals(req.user._id)) {
@@ -43,7 +42,7 @@ module.exports.isReviewAuthor = async (req, res, next) => {
 	next();
 };
 
-module.exports.validateReview = (req, res, next) => {
+export const validateReview = (req, res, next) => {
 	const { error } = reviewSchema.validate(req.body);
 	if (error) {
 		const msg = error.details.map((el) => el.message).join(",");

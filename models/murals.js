@@ -1,6 +1,7 @@
-const mongoose = require("mongoose");
-const Review = require("./review");
-const Schema = mongoose.Schema;
+import mongoose from "mongoose";
+import Review from "./review.js";
+
+const { Schema } = mongoose;
 
 // https://res.cloudinary.com/douqbebwk/image/upload/w_300/v1600113904/YelpCamp/gxgle1ovzd2f3dgcpass.png
 
@@ -63,4 +64,4 @@ muralschema.post("findOneAndDelete", async function (doc) {
 	}
 });
 
-module.exports = mongoose.model("mural", muralschema);
+export default mongoose.model("Mural", muralschema);

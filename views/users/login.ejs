@@ -1,56 +1,118 @@
 <% layout('layouts/boilerplate')%>
+<div class="page-transition">
+	<div class="auth-container container d-flex justify-content-center align-items-center min-vh-100">
+		<div class="row w-100 justify-content-center">
+			<div class="col-md-6 col-lg-5 col-xl-4">
+				<div class="auth-card">
+					<div class="auth-header">
+						<i class="fas fa-sign-in-alt fa-2x mb-3"></i>
+						<h1>Welcome Back</h1>
+						<p class="mb-0 opacity-75">Sign in to your account</p>
+					</div>
+					<div class="auth-body">
+						<form action="/login" method="POST" class="validated-form needs-validation" novalidate>
+							<div class="mb-4">
+								<label class="form-label fw-semibold" for="username">
+									<i class="fas fa-user text-primary"></i> Username
+								</label>
+								<input
+									class="form-control form-control-lg"
+									type="text"
+									id="username"
+									name="username"
+									placeholder="Enter your username"
+									autofocus
+									required />
+								<div class="valid-feedback">Great!</div>
+								<div class="invalid-feedback">Please enter your username.</div>
+							</div>
 
-<div
-	class="logincontainer container d-flex justify-content-center align-items-center">
-	<div class="row">
-		<div class="col-md-6 offset-md-3 col-xl-4 offset-xl-4">
-			<div class="card shadow">
-				<img
-					src="https://res.cloudinary.com/dhrh9dlim/image/upload/v1678214725/YelpCamp/loginimg_vfrn4b.webp"
-					alt=""
-					class="card-img-top" />
-				<div class="card-body">
-					<h5 class="card-title">Login</h5>
-					<form
-						action="/login"
-						method="POST"
-						class="validated-form"
-						novalidate>
-						<div class="mb-3">
-							<label
-								class="form-label"
-								for="username"
-								>Username</label
-							>
-							<input
-								class="form-control"
-								type="text"
-								id="username"
-								name="username"
-								autofocus
-								required />
-							<div class="valid-feedback">Looks good!</div>
-						</div>
+							<div class="mb-4">
+								<label class="form-label fw-semibold" for="password">
+									<i class="fas fa-lock text-primary"></i> Password
+								</label>
+								<div class="position-relative">
+									<input
+										class="form-control form-control-lg"
+										type="password"
+										id="password"
+										name="password"
+										placeholder="Enter your password"
+										required />
+									<button type="button" class="btn btn-link position-absolute end-0 top-50 translate-middle-y pe-3" id="togglePassword">
+										<i class="fas fa-eye" id="eyeIcon"></i>
+									</button>
+								</div>
+								<div class="valid-feedback">Perfect!</div>
+								<div class="invalid-feedback">Please enter your password.</div>
+							</div>
 
-						<div class="mb-3">
-							<label
-								class="form-label"
-								for="password"
-								>Password</label
-							>
-							<input
-								class="form-control"
-								type="password"
-								id="password"
-								name="password"
-								required />
-							<div class="valid-feedback">Looks good!</div>
-						</div>
-						<button class="btn btn-success btn-block">Login</button>
-					</form>
+							<button type="submit" class="btn btn-primary btn-lg w-100 mb-3" id="loginBtn">
+								<span class="btn-text">
+									<i class="fas fa-sign-in-alt"></i> Sign In
+								</span>
+								<span class="btn-loading d-none">
+									<span class="spinner-border spinner-border-sm me-2" role="status"></span>
+									Signing in...
+								</span>
+							</button>
+						</form>
+					</div>
+					<div class="auth-footer">
+						<p class="mb-0">
+							Don't have an account? 
+							<a href="/register" class="text-primary fw-semibold text-decoration-none">Sign up here</a>
+						</p>
+					</div>
 				</div>
 			</div>
-			<br />
 		</div>
 	</div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+	const form = document.querySelector('.needs-validation');
+	const loginBtn = document.getElementById('loginBtn');
+	const btnText = loginBtn.querySelector('.btn-text');
+	const btnLoading = loginBtn.querySelector('.btn-loading');
+	const togglePassword = document.getElementById('togglePassword');
+	const passwordInput = document.getElementById('password');
+	const eyeIcon = document.getElementById('eyeIcon');
+
+	// Password visibility toggle
+	togglePassword.addEventListener('click', function() {
+		const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+		passwordInput.setAttribute('type', type);
+		eyeIcon.classList.toggle('fa-eye');
+		eyeIcon.classList.toggle('fa-eye-slash');
+	});
+
+	// Form validation and submission
+	form.addEventListener('submit', function(e) {
+		if (!form.checkValidity()) {
+			e.preventDefault();
+			e.stopPropagation();
+		} else {
+			btnText.classList.add('d-none');
+			btnLoading.classList.remove('d-none');
+			loginBtn.disabled = true;
+		}
+		form.classList.add('was-validated');
+	});
+
+	// Real-time validation
+	const inputs = form.querySelectorAll('input');
+	inputs.forEach(input => {
+		input.addEventListener('input', function() {
+			if (this.checkValidity()) {
+				this.classList.remove('is-invalid');
+				this.classList.add('is-valid');
+			} else {
+				this.classList.remove('is-valid');
+				this.classList.add('is-invalid');
+			}
+		});
+	});
+});
+</script>

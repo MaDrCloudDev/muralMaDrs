@@ -1,13 +1,16 @@
-const express = require("express");
-const router = express.Router();
-const murals = require("../controllers/murals");
-const catchAsync = require("../utils/catchAsync");
-const { isLoggedIn, isAuthor, validatemural } = require("../middleware");
-const multer = require("multer");
-const { storage } = require("../cloudinary");
-const upload = multer({ storage });
+import express from "express";
+import * as murals from "../controllers/murals.js";
+import catchAsync from "../utils/catchAsync.js";
+import { isLoggedIn, isAuthor, validatemural } from "../middleware.js";
+import multer from "multer";
+import { storage, hasCloudinaryConfig } from "../cloudinary/index.js";
 
-const mural = require("../models/murals");
+const router = express.Router();
+
+const upload = multer({ 
+	storage: storage,
+	limits: { fileSize: 5 * 1024 * 1024 }
+});
 
 router
 	.route("/")
@@ -40,4 +43,4 @@ router.get(
 	catchAsync(murals.renderEditForm)
 );
 
-module.exports = router;
+export default router;

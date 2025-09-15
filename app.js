@@ -1,43 +1,39 @@
-if (process.env.NODE_ENV !== "production") {
-	require("dotenv").config();
-}
+import dotenv from 'dotenv';
+dotenv.config();
 
-const express = require("express");
-const favicon = require("serve-favicon");
-const path = require("path");
-const mongoose = require("mongoose");
-const ejsMate = require("ejs-mate");
-const session = require("express-session");
-const flash = require("connect-flash");
-const ExpressError = require("./utils/ExpressError");
-const methodOverride = require("method-override");
-const passport = require("passport");
-const LocalStrategy = require("passport-local");
-const User = require("./models/user");
-const helmet = require("helmet");
-const mongoSanitize = require("express-mongo-sanitize");
-const userRoutes = require("./routes/users");
-const muralRoutes = require("./routes/murals");
-const reviewRoutes = require("./routes/reviews");
+import express from 'express';
+import favicon from 'serve-favicon';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import mongoose from 'mongoose';
+import ejsMate from 'ejs-mate';
+import session from 'express-session';
+import flash from 'connect-flash';
+import ExpressError from './utils/ExpressError.js';
+import methodOverride from 'method-override';
+import passport from 'passport';
+import { Strategy as LocalStrategy } from 'passport-local';
+import User from './models/user.js';
+import helmet from 'helmet';
+import mongoSanitize from 'express-mongo-sanitize';
+import userRoutes from './routes/users.js';
+import muralRoutes from './routes/murals.js';
+import reviewRoutes from './routes/reviews.js';
+import MongoStore from 'connect-mongo';
 
-// var favicon = require('serve-favicon');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const MongoDBStore = require("connect-mongo")(session);
+const dbUrl = process.env.DB_URL || "mongodb://localhost:27017/mural-madrs";
 
-const dbUrl = process.env.DB_URL || "mongodb://localhost:27017/yelp-camp";
-
-mongoose.connect(dbUrl, {
-	useNewUrlParser: true,
-	useCreateIndex: true,
-	useUnifiedTopology: true,
-	useFindAndModify: false,
-});
-
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", () => {
-	console.log("Database connected");
-});
+mongoose.connect(dbUrl)
+	.then(() => {
+		console.log("Database connected successfully");
+	})
+	.catch((err) => {
+		console.error("Database connection error:", err);
+		process.exit(1);
+	});
 
 const app = express();
 app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
@@ -45,9 +41,9 @@ app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
-// app.use(favicon(__dirname + '/public/images/favicon.png'));
 
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(
@@ -55,16 +51,25 @@ app.use(
 		replaceWith: "_",
 	})
 );
+
 const secret = process.env.SECRET || "thisshouldbeabettersecret!";
 
-const store = new MongoDBStore({
-	url: dbUrl,
+const store = MongoStore.create({
+	mongoUrl: dbUrl,
+	touchAfter: 24 * 3600, // lazy session update
 	secret,
-	touchAfter: 24 * 60 * 60,
+	resave: false,
+	saveUninitialized: true,
+	cookie: {
+		httpOnly: true,
+		secure: process.env.NODE_ENV === "production",
+		expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+		maxAge: 1000 * 60 * 60 * 24 * 7,
+	},
 });
 
-store.on("error", function (e) {
-	console.log("SESSION STORE ERROR", e);
+store.on("error", (e) => {
+	console.error("SESSION STORE ERROR", e);
 });
 
 const sessionConfig = {
@@ -75,7 +80,7 @@ const sessionConfig = {
 	saveUninitialized: true,
 	cookie: {
 		httpOnly: true,
-		// secure: true,
+		secure: process.env.NODE_ENV === "production",
 		expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
 		maxAge: 1000 * 60 * 60 * 24 * 7,
 	},
@@ -157,11 +162,20 @@ app.all("*", (req, res, next) => {
 
 app.use((err, req, res, next) => {
 	const { statusCode = 500 } = err;
+	
+	// Handle cases where err might be a string instead of an Error object
+	if (typeof err === 'string') {
+		const errorObj = new Error(err);
+		errorObj.statusCode = statusCode;
+		return res.status(statusCode).render("error", { err: errorObj });
+	}
+	
 	if (!err.message) err.message = "Oh No, Something Went Wrong!";
 	res.status(statusCode).render("error", { err });
 });
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-	console.log(`Serving on port ${port}`);
+	console.log(`🚀 Server running on port ${port}`);
+	console.log(`🌐 Visit: http://localhost:${port}`);
 });

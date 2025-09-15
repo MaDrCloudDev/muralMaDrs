@@ -1,11 +1,9 @@
-const express = require("express");
+import express from "express";
+import { validateReview, isLoggedIn, isReviewAuthor } from "../middleware.js";
+import * as reviews from "../controllers/reviews.js";
+import catchAsync from "../utils/catchAsync.js";
+
 const router = express.Router({ mergeParams: true });
-const { validateReview, isLoggedIn, isReviewAuthor } = require("../middleware");
-const mural = require("../models/murals");
-const Review = require("../models/review");
-const reviews = require("../controllers/reviews");
-const ExpressError = require("../utils/ExpressError");
-const catchAsync = require("../utils/catchAsync");
 
 router.post("/", isLoggedIn, validateReview, catchAsync(reviews.createReview));
 
@@ -16,4 +14,4 @@ router.delete(
 	catchAsync(reviews.deleteReview)
 );
 
-module.exports = router;
+export default router;

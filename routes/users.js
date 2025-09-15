@@ -1,9 +1,9 @@
-const express = require("express");
+import express from "express";
+import passport from "passport";
+import catchAsync from "../utils/catchAsync.js";
+import * as users from "../controllers/users.js";
+
 const router = express.Router();
-const passport = require("passport");
-const catchAsync = require("../utils/catchAsync");
-const User = require("../models/user");
-const users = require("../controllers/users");
 
 router
 	.route("/register")
@@ -23,4 +23,4 @@ router
 
 router.get("/logout", users.logout);
 
-module.exports = router;
+export default router;
