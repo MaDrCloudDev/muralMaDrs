@@ -1,24 +1,15 @@
 {
   "version": 2,
   "name": "mural-madrs",
-  "builds": [
-    { 
-      "src": "app.js", 
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": ["views/**", "public/**"]
-      }
+  "functions": {
+    "app.js": {
+      "includeFiles": ["views/**", "public/**"]
     }
-  ],
+  },
   "routes": [
     { "src": "/public/(.*)", "dest": "/public/$1" },
     { "src": "/(.*)", "dest": "/app.js" }
   ],
-  "functions": {
-    "app.js": {
-      "includeFiles": "views/**"
-    }
-  },
   "env": {
     "NODE_ENV": "production"
   }
