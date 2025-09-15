@@ -161,9 +161,11 @@ app.use(passport.session());
 app.use((req, res, next) => {
   try {
     console.log('Middleware: Setting res.locals.currentUser', req.user || null);
+    console.log('Flash success:', req.flash ? req.flash('success') : []);
+    console.log('Flash error:', req.flash ? req.flash('error') : []);
     res.locals.currentUser = req.user || null;
-    res.locals.success = req.flash ? req.flash("success") : [];
-    res.locals.error = req.flash ? req.flash("error") : [];
+    res.locals.success = req.flash ? req.flash('success') : [];
+    res.locals.error = req.flash ? req.flash('error') : [];
     next();
   } catch (err) {
     console.error('res.locals middleware error:', err);
