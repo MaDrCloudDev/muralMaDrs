@@ -1,10 +1,10 @@
-# [muralMaDrs](https://muralmadrs.madr.io/)
-### _Note: The Render mirror takes some time to wake up. Give it a minute. The primary version is hosted on Vercel, but is proxied through Cloudflare, and sometimes returns a bad gateway; requiring reload or resubmission._
-## [Render mirror](https://muralmadrs.onrender.com/) 
+# [muralMaDrs](https://muralmadrs.onrender.com/)
+### _Note: The Render mirror takes some time to wake up. Give it a minute. I'm in the process of updating the Vercel mirror.
+## [Vercel mirror](https://muralmadrs.madr.io) 
 
 # MuralMaDrs
 
-A modern web application for discovering and sharing street murals built with Express.js, MongoDB, and EJS.
+A modern MVC web application for discovering and sharing street murals built with Express.js, MongoDB, and EJS.
 
 ## 🚀 Features
 
