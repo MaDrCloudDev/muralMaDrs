@@ -1,15 +1,10 @@
 {
   "version": 2,
+  "name": "mural-madrs",
   "builds": [
-    {
-      "src": "app.js",
-      "use": "@vercel/node"
-    }
+    { "src": "app.js", "use": "@vercel/node" }
   ],
   "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "app.js"
-    }
+    { "src": "/(.*)", "dest": "app.js" }
   ]
 }
