@@ -50,3 +50,4 @@ temp/
 
 # Local uploads (development only)
 public/uploads/
+.vercel

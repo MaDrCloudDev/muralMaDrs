@@ -1,16 +1,9 @@
-{
-  "version": 2,
-  "name": "mural-madrs",
-  "functions": {
-    "app.js": {
-    "includeFiles": "views/**"
-    }
-  },
-  "routes": [
-    { "src": "/public/(.*)", "dest": "/public/$1" },
-    { "src": "/(.*)", "dest": "/app.js" }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  }
-}
+        {
+          "version": 2,
+          "rewrites": [
+            {
+              "source": "/(.*)",
+              "destination": "/app.js"
+            }
+          ]
+        }
