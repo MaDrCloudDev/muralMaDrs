@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node app.js",
-    "build": "npm install",
+    "build": "echo \"No build step required\"",
     "dev": "node app.js",
     "lint": "eslint . --ext .js",
     "lint:fix": "eslint . --ext .js --fix",
