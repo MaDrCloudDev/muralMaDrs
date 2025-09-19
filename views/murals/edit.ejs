@@ -1,217 +1,304 @@
 <% layout('layouts/boilerplate')%>
-<div class="page-transition">
-	<div class="container">
-		<div class="row justify-content-center">
-			<div class="col-lg-8">
-				<div class="form-header text-center mb-5">
-					<h1 class="display-5 fw-bold text-primary">
-						<i class="fas fa-edit"></i> Edit Mural
-					</h1>
-					<p class="lead text-muted">Update your mural information and images</p>
+<div class="animate-fadeInUp max-w-4xl mx-auto">
+	<div class="text-center mb-8">
+		<h1 class="text-4xl md:text-5xl font-bold text-gradient mb-4">
+			<i class="fas fa-edit mr-3"></i> Edit Mural
+		</h1>
+		<p class="text-xl text-muted-foreground">
+			Update your mural information and images
+		</p>
+	</div>
+
+	<div class="bg-card rounded-2xl shadow-xl p-8">
+		<form
+			action="/murals/<%=mural._id%>?_method=PUT"
+			method="POST"
+			novalidate
+			class="validated-form needs-validation space-y-6"
+			enctype="multipart/form-data">
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+				<div>
+					<label
+						class="block text-sm font-semibold text-foreground mb-2"
+						for="title">
+						<i class="fas fa-heading text-primary mr-2"></i> Mural
+						Title
+					</label>
+					<input
+						class="w-full px-4 py-3 bg-input border-2 border-border rounded-lg text-foreground placeholder-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300"
+						type="text"
+						id="title"
+						name="mural[title]"
+						value="<%=mural.title %>"
+						required />
+					<div
+						class="valid-feedback text-green-600 text-sm mt-1 hidden">
+						Perfect!
+					</div>
+					<div
+						class="invalid-feedback text-red-600 text-sm mt-1 hidden">
+						Please provide a title for the mural.
+					</div>
 				</div>
-
-				<div class="card form-card">
-					<div class="card-body p-4">
-						<form action="/murals/<%=mural._id%>?_method=PUT" method="POST" novalidate class="validated-form needs-validation" enctype="multipart/form-data">
-							<div class="row">
-								<div class="col-md-6">
-									<div class="mb-4">
-										<label class="form-label fw-semibold" for="title">
-											<i class="fas fa-heading text-primary"></i> Mural Title
-										</label>
-										<input
-											class="form-control form-control-lg"
-											type="text"
-											id="title"
-											name="mural[title]"
-											value="<%=mural.title %>"
-											required />
-										<div class="valid-feedback">Perfect!</div>
-										<div class="invalid-feedback">Please provide a title for the mural.</div>
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="mb-4">
-										<label class="form-label fw-semibold" for="artist">
-											<i class="fas fa-user-tie text-primary"></i> Artist(s)
-										</label>
-										<input
-											class="form-control form-control-lg"
-											type="text"
-											id="artist"
-											name="mural[artist]"
-											value="<%=mural.artist %>"
-											required />
-										<div class="valid-feedback">Great!</div>
-										<div class="invalid-feedback">Please specify the artist(s).</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="mb-4">
-								<label class="form-label fw-semibold" for="location">
-									<i class="fas fa-map-marker-alt text-primary"></i> Location
-								</label>
-								<input
-									class="form-control form-control-lg"
-									type="text"
-									id="location"
-									name="mural[location]"
-									value="<%=mural.location %>"
-									required />
-								<div class="valid-feedback">Excellent!</div>
-								<div class="invalid-feedback">Please provide the mural's location.</div>
-							</div>
-
-							<div class="mb-4">
-								<label class="form-label fw-semibold" for="description">
-									<i class="fas fa-align-left text-primary"></i> Description
-								</label>
-								<textarea
-									class="form-control"
-									id="description"
-									name="mural[description]"
-									rows="4"
-									required><%= mural.description%></textarea>
-								<div class="valid-feedback">Wonderful description!</div>
-								<div class="invalid-feedback">Please describe the mural.</div>
-							</div>
-
-							<!-- Current Images Section -->
-							<% if(mural.images && mural.images.length > 0) { %>
-							<div class="mb-4">
-								<label class="form-label fw-semibold">
-									<i class="fas fa-images text-primary"></i> Current Images
-								</label>
-								<div class="current-images-grid">
-									<% mural.images.forEach(function(img, i) { %>
-									<div class="current-image-item">
-										<img src="<%=img.url %>" class="img-fluid" alt="Mural image <%= i + 1 %>" />
-										<div class="image-overlay">
-											<div class="form-check">
-												<input
-													type="checkbox"
-													class="form-check-input"
-													id="image-<%=i%>"
-													name="deleteImages[]"
-													value="<%=img.filename%>" />
-												<label class="form-check-label text-white" for="image-<%=i%>">
-													<i class="fas fa-trash"></i> Delete
-												</label>
-											</div>
-										</div>
-									</div>
-									<% }) %>
-								</div>
-								<div class="form-text">
-									<i class="fas fa-info-circle"></i> Check the images you want to remove
-								</div>
-							</div>
-							<% } %>
-
-							<!-- Add New Images Section -->
-							<div class="mb-4">
-								<label class="form-label fw-semibold" for="image">
-									<i class="fas fa-camera-retro text-primary"></i> Add New Images
-								</label>
-								<div class="file-upload-container">
-									<input
-										type="file"
-										class="form-control"
-										id="image"
-										name="image"
-										multiple
-										accept="image/*" />
-									<div class="file-upload-help">
-										<i class="fas fa-cloud-upload-alt fa-2x text-muted mb-2"></i>
-										<p class="mb-1">Add more images to showcase the mural</p>
-										<small class="text-muted">Supported formats: JPG, PNG, GIF (Max 10MB each)</small>
-									</div>
-								</div>
-								<div id="image-preview" class="image-preview-grid mt-3"></div>
-							</div>
-
-							<div class="form-actions d-flex justify-content-between align-items-center">
-								<a href="/murals/<%= mural._id%>" class="btn btn-outline-secondary btn-lg">
-									<i class="fas fa-arrow-left"></i> Back to Mural
-								</a>
-								<button type="submit" class="btn btn-primary btn-lg px-5" id="submit-btn">
-									<span class="btn-text">
-										<i class="fas fa-save"></i> Update Mural
-									</span>
-									<span class="btn-loading d-none">
-										<span class="spinner-border spinner-border-sm me-2" role="status"></span>
-										Updating...
-									</span>
-								</button>
-							</div>
-						</form>
+				<div>
+					<label
+						class="block text-sm font-semibold text-foreground mb-2"
+						for="artist">
+						<i class="fas fa-user-tie text-primary mr-2"></i>
+						Artist(s)
+					</label>
+					<input
+						class="w-full px-4 py-3 bg-input border-2 border-border rounded-lg text-foreground placeholder-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300"
+						type="text"
+						id="artist"
+						name="mural[artist]"
+						value="<%=mural.artist %>"
+						required />
+					<div
+						class="valid-feedback text-green-600 text-sm mt-1 hidden">
+						Great!
+					</div>
+					<div
+						class="invalid-feedback text-red-600 text-sm mt-1 hidden">
+						Please specify the artist(s).
 					</div>
 				</div>
 			</div>
-		</div>
+
+			<div>
+				<label
+					class="block text-sm font-semibold text-foreground mb-2"
+					for="location">
+					<i class="fas fa-map-marker-alt text-primary mr-2"></i>
+					Location
+				</label>
+				<input
+					class="w-full px-4 py-3 bg-input border-2 border-border rounded-lg text-foreground placeholder-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300"
+					type="text"
+					id="location"
+					name="mural[location]"
+					value="<%=mural.location %>"
+					required />
+				<div
+					class="valid-feedback text-green-600 text-sm mt-1 hidden">
+					Excellent!
+				</div>
+				<div
+					class="invalid-feedback text-red-600 text-sm mt-1 hidden">
+					Please provide the mural's location.
+				</div>
+			</div>
+
+			<div>
+				<label
+					class="block text-sm font-semibold text-foreground mb-2"
+					for="description">
+					<i class="fas fa-align-left text-primary mr-2"></i>
+					Description
+				</label>
+				<textarea
+					class="w-full px-4 py-3 bg-input border-2 border-border rounded-lg text-foreground placeholder-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300 resize-none"
+					id="description"
+					name="mural[description]"
+					rows="4"
+					required>
+<%= mural.description%></textarea
+				>
+				<div
+					class="valid-feedback text-green-600 text-sm mt-1 hidden">
+					Wonderful description!
+				</div>
+				<div
+					class="invalid-feedback text-red-600 text-sm mt-1 hidden">
+					Please describe the mural.
+				</div>
+			</div>
+
+			<% if(mural.images && mural.images.length > 0) { %>
+			<div>
+				<label
+					class="block text-sm font-semibold text-foreground mb-4">
+					<i class="fas fa-images text-primary mr-2"></i> Current
+					Images
+				</label>
+				<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+					<% mural.images.forEach(function(img, i) { %>
+					<div
+						class="relative group rounded-lg overflow-hidden aspect-square shadow-md hover:shadow-lg transition-all duration-300">
+						<img
+							src="<%=img.url %>"
+							class="w-full h-full object-cover"
+							alt="Mural image <%= i + 1 %>" />
+						<div
+							class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center p-3">
+							<div class="flex items-center gap-2">
+								<input
+									type="checkbox"
+									class="w-4 h-4 text-red-600 bg-white border-2 border-white rounded focus:ring-red-500 focus:ring-2"
+									id="image-<%=i%>"
+									name="deleteImages[]"
+									value="<%=img.filename%>" />
+								<label
+									class="text-white font-medium text-sm cursor-pointer"
+									for="image-<%=i%>">
+									<i class="fas fa-trash mr-1"></i> Delete
+								</label>
+							</div>
+						</div>
+					</div>
+					<% }) %>
+				</div>
+				<p class="text-sm text-muted-foreground mt-3">
+					<i class="fas fa-info-circle mr-1"></i> Check the images you
+					want to remove
+				</p>
+			</div>
+			<% } %>
+
+			<div>
+				<label
+					class="block text-sm font-semibold text-foreground mb-2"
+					for="image">
+					<i class="fas fa-camera-retro text-primary mr-2"></i> Add
+					New Images
+				</label>
+				<div
+					class="relative border-2 border-dashed border-border rounded-lg p-8 text-center hover:border-primary transition-colors duration-300 bg-input/50">
+					<input
+						type="file"
+						class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+						id="image"
+						name="image"
+						multiple
+						accept="image/*" />
+					<div class="pointer-events-none">
+						<i
+							class="fas fa-cloud-upload-alt text-4xl text-muted-foreground mb-4"></i>
+						<p class="text-foreground font-medium mb-2">
+							Add more images to showcase the mural
+						</p>
+						<p class="text-sm text-muted-foreground">
+							Supported formats: JPG, PNG, GIF (Max 10MB each)
+						</p>
+					</div>
+				</div>
+				<div
+					id="image-preview"
+					class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4"></div>
+			</div>
+
+			<div
+				class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-6 border-t border-border">
+				<a
+					href="/murals/<%= mural._id%>"
+					class="inline-flex items-center gap-2 px-6 py-3 border-2 border-border text-foreground rounded-lg hover:bg-border/50 transition-all duration-300 font-medium">
+					<i class="fas fa-arrow-left"></i> Back to Mural
+				</a>
+				<button
+					type="submit"
+					class="inline-flex items-center gap-2 bg-gradient-primary text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 hover:shadow-lg transition-all duration-300"
+					id="submit-btn">
+					<span class="btn-text flex items-center gap-2">
+						<i class="fas fa-save"></i> Update Mural
+					</span>
+					<span class="btn-loading hidden items-center gap-2">
+						<div
+							class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+						Updating...
+					</span>
+				</button>
+			</div>
+		</form>
 	</div>
 </div>
 
 <script>
-// Enhanced form validation and image preview
-document.addEventListener('DOMContentLoaded', function() {
-	const form = document.querySelector('.needs-validation');
-	const imageInput = document.getElementById('image');
-	const imagePreview = document.getElementById('image-preview');
-	const submitBtn = document.getElementById('submit-btn');
-	const btnText = submitBtn.querySelector('.btn-text');
-	const btnLoading = submitBtn.querySelector('.btn-loading');
+	document.addEventListener('DOMContentLoaded', function () {
+		const form = document.querySelector('.needs-validation');
+		const imageInput = document.getElementById('image');
+		const imagePreview = document.getElementById('image-preview');
+		const submitBtn = document.getElementById('submit-btn');
+		const btnText = submitBtn.querySelector('.btn-text');
+		const btnLoading = submitBtn.querySelector('.btn-loading');
+		imageInput.addEventListener('change', function (e) {
+			imagePreview.innerHTML = '';
+			const files = Array.from(e.target.files);
 
-	// Image preview functionality
-	imageInput.addEventListener('change', function(e) {
-		imagePreview.innerHTML = '';
-		const files = Array.from(e.target.files);
-		
-		files.forEach((file, index) => {
-			if (file.type.startsWith('image/')) {
-				const reader = new FileReader();
-				reader.onload = function(e) {
-					const previewItem = document.createElement('div');
-					previewItem.className = 'image-preview-item';
-					previewItem.innerHTML = `
+			files.forEach((file, index) => {
+				if (file.type.startsWith('image/')) {
+					const reader = new FileReader();
+					reader.onload = function (e) {
+						const previewItem = document.createElement('div');
+						previewItem.className = 'image-preview-item';
+						previewItem.innerHTML = `
 						<img src="${e.target.result}" alt="Preview ${index + 1}">
 						<div class="image-preview-overlay">
 							<span class="image-preview-name">${file.name}</span>
 						</div>
 					`;
-					imagePreview.appendChild(previewItem);
-				};
-				reader.readAsDataURL(file);
-			}
+						imagePreview.appendChild(previewItem);
+					};
+					reader.readAsDataURL(file);
+				}
+			});
 		});
-	});
 
-	// Form submission with loading state
-	form.addEventListener('submit', function(e) {
-		if (!form.checkValidity()) {
-			e.preventDefault();
-			e.stopPropagation();
-		} else {
-			btnText.classList.add('d-none');
-			btnLoading.classList.remove('d-none');
-			submitBtn.disabled = true;
-		}
-		form.classList.add('was-validated');
-	});
-
-	// Real-time validation feedback
-	const inputs = form.querySelectorAll('input, textarea');
-	inputs.forEach(input => {
-		input.addEventListener('input', function() {
-			if (this.checkValidity()) {
-				this.classList.remove('is-invalid');
-				this.classList.add('is-valid');
+		form.addEventListener('submit', function (e) {
+			if (!form.checkValidity()) {
+				e.preventDefault();
+				e.stopPropagation();
 			} else {
-				this.classList.remove('is-valid');
-				this.classList.add('is-invalid');
+				btnText.classList.add('d-none');
+				btnLoading.classList.remove('d-none');
+				submitBtn.disabled = true;
 			}
+			form.classList.add('was-validated');
+		});
+
+		const inputs = form.querySelectorAll('input, textarea');
+		inputs.forEach((input) => {
+			input.addEventListener('input', function () {
+				if (this.checkValidity()) {
+					this.classList.remove('is-invalid');
+					this.classList.add('is-valid');
+				} else {
+					this.classList.remove('is-valid');
+					this.classList.add('is-invalid');
+				}
+			});
 		});
 	});
-});
+</script>
+				}
+			});
+		});
+
+		const deleteCheckboxes = document.querySelectorAll(
+			'input[name="deleteImages[]"]'
+		);
+		deleteCheckboxes.forEach((checkbox) => {
+			checkbox.addEventListener('change', function () {
+				const imageContainer = this.closest('.relative');
+				if (this.checked) {
+					imageContainer.classList.add(
+						'ring-4',
+						'ring-red-500',
+						'ring-opacity-50'
+					);
+					imageContainer
+						.querySelector('.absolute')
+						.classList.remove('opacity-0');
+					imageContainer
+						.querySelector('.absolute')
+						.classList.add('opacity-100');
+				} else {
+					imageContainer.classList.remove(
+						'ring-4',
+						'ring-red-500',
+						'ring-opacity-50'
+					);
+				}
+			});
+		});
+	});
 </script>

@@ -1,30 +1,184 @@
-<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/">muralMaDrs</a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarNavAltMarkup"
-      aria-controls="navbarNavAltMarkup"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link" href="/murals">Murals</a>
-        <a class="nav-link" href="/murals/new">Add Mural</a>
-      </div>
-      <div class="navbar-nav ms-auto">
-        <% if (typeof currentUser === 'undefined' || !currentUser) { %>
-          <a class="nav-link" href="/login">Login</a>
-          <a class="nav-link" href="/register">Register</a>
-        <% } else { %>
-          <a class="nav-link" href="/logout">Logout</a>
-        <% } %>
-      </div>
-    </div>
-  </div>
+<nav
+	class="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+		<div class="flex justify-between items-center h-16">
+			<!-- Logo -->
+			<div class="flex-shrink-0">
+				<a
+					href="/"
+					class="text-xl font-bold text-foreground hover:text-primary transition-colors">
+					muralMaDrs
+				</a>
+			</div>
+
+			<!-- Desktop Navigation -->
+			<div class="hidden md:block">
+				<div class="ml-10 flex items-center space-x-8">
+					<a
+						href="/murals"
+						class="text-muted-foreground hover:text-foreground transition-colors font-medium">
+						Murals
+					</a>
+					<a
+						href="/murals/new"
+						class="text-muted-foreground hover:text-foreground transition-colors font-medium">
+						Add Mural
+					</a>
+				</div>
+			</div>
+
+			<!-- Desktop Auth Links -->
+			<div class="hidden md:block">
+				<div class="ml-4 flex items-center space-x-4">
+					<% if (!currentUser) { %>
+					<a
+						href="/login"
+						class="text-muted-foreground hover:text-foreground transition-colors font-medium">
+						Login
+					</a>
+					<a
+						href="/register"
+						class="bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 rounded-lg font-medium transition-colors">
+						Register
+					</a>
+					<% } else { %>
+					<a
+						href="/logout"
+						class="text-muted-foreground hover:text-foreground transition-colors font-medium">
+						Logout
+					</a>
+					<% } %>
+				</div>
+			</div>
+
+			<!-- Mobile menu button -->
+			<div class="md:hidden">
+				<button
+					id="mobile-menu-button"
+					class="inline-flex items-center justify-center p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+					aria-expanded="false">
+					<span class="sr-only">Open main menu</span>
+					<i
+						class="fas fa-bars text-xl"
+						id="menu-icon"
+						aria-hidden="true"
+						style="display: block"></i>
+					<i
+						class="fas fa-times text-xl"
+						id="close-icon"
+						aria-hidden="true"
+						style="display: none"></i>
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Mobile menu -->
+	<div
+		class="md:hidden hidden"
+		id="mobile-menu">
+		<div
+			class="px-2 pt-2 pb-3 space-y-1 bg-background/95 backdrop-blur-md border-b border-border">
+			<a
+				href="/murals"
+				class="mobile-menu-link block px-3 py-2 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-colors">
+				Murals
+			</a>
+			<a
+				href="/murals/new"
+				class="mobile-menu-link block px-3 py-2 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-colors">
+				Add Mural
+			</a>
+
+			<div class="border-t border-border pt-4 pb-3">
+				<% if (!currentUser) { %>
+				<div class="space-y-1">
+					<a
+						href="/login"
+						class="mobile-menu-link block px-3 py-2 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-colors">
+						Login
+					</a>
+					<a
+						href="/register"
+						class="mobile-menu-link block mx-3 mt-2 bg-primary text-primary-foreground hover:bg-primary/90 px-3 py-2 rounded-lg font-medium transition-colors text-center">
+						Register
+					</a>
+				</div>
+				<% } else { %>
+				<a
+					href="/logout"
+					class="mobile-menu-link block px-3 py-2 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-colors">
+					Logout
+				</a>
+				<% } %>
+			</div>
+		</div>
+	</div>
 </nav>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		const mobileMenuButton = document.getElementById(
+			'mobile-menu-button'
+		);
+		const mobileMenu = document.getElementById('mobile-menu');
+		const menuIcon = document.getElementById('menu-icon');
+		const closeIcon = document.getElementById('close-icon');
+		const mobileMenuLinks = document.querySelectorAll(
+			'.mobile-menu-link'
+		);
+
+		function toggleMobileMenu() {
+			// Toggle mobile menu visibility
+			mobileMenu.classList.toggle('hidden');
+
+			// Toggle icons with explicit display styles
+			if (menuIcon.style.display === 'none') {
+				menuIcon.style.display = 'block';
+				closeIcon.style.display = 'none';
+			} else {
+				menuIcon.style.display = 'none';
+				closeIcon.style.display = 'block';
+			}
+
+			// Update aria-expanded for accessibility
+			const isExpanded = !mobileMenu.classList.contains('hidden');
+			mobileMenuButton.setAttribute('aria-expanded', isExpanded);
+		}
+
+		// Toggle menu when button is clicked
+		if (mobileMenuButton) {
+			mobileMenuButton.addEventListener('click', toggleMobileMenu);
+		}
+
+		// Close menu when any link is clicked
+		mobileMenuLinks.forEach((link) => {
+			link.addEventListener('click', function () {
+				// Close menu after a short delay to allow navigation
+				setTimeout(toggleMobileMenu, 100);
+			});
+		});
+
+		// Close menu when clicking outside
+		document.addEventListener('click', function (event) {
+			if (
+				!mobileMenuButton.contains(event.target) &&
+				!mobileMenu.contains(event.target)
+			) {
+				if (!mobileMenu.classList.contains('hidden')) {
+					toggleMobileMenu();
+				}
+			}
+		});
+
+		// Close menu on escape key
+		document.addEventListener('keydown', function (event) {
+			if (
+				event.key === 'Escape' &&
+				!mobileMenu.classList.contains('hidden')
+			) {
+				toggleMobileMenu();
+			}
+		});
+	});
+</script>

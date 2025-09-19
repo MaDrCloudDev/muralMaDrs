@@ -1,68 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>muralMaDrs | MaDr</title>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
-      integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="/stylesheets/home.css" />
-  </head>
+<html
+	lang="en"
+	class="h-full">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+		<title>muralMaDrs | MaDr</title>
+		<link
+			rel="stylesheet"
+			href="/stylesheets/output.css" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+	</head>
 
-  <body class="d-flex text-center text-white bg-dark">
-    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-      <header class="mb-auto">
-        <div>
-          <h1 class="logo float-left mb-0">
-            <a class="logo" href="/">muralMaDrs</a>
-          </h1>
-          <nav class="nav nav-masthead justify-content-center float-right">
-            <a class="nav-link" href="/murals">Murals</a>
-            <% if(!currentUser) { %>
-            <a class="nav-link" href="/login">Login</a>
-            <a class="nav-link" href="/register">Register</a>
-            <% } else { %>
-            <a class="nav-link" href="/logout">Logout</a>
-            <% } %>
-          </nav>
-        </div>
-      </header>
-      <main class="px-3">
-        <p class="lead">
-          Welcome to muralMaDrs! <br />
-          Jump in and explore public, outdoor murals. <br />
-          Share some you've created or spotted, review others!
-        </p>
-        <a
-          href="/murals"
-          class="btn btn-lg btn-secondary font-weight-bold border-white bg-white"
-          >View murals</a
-        >
-      </main>
+	<body
+		class="h-full bg-gradient-to-br from-slate-900 via-slate-800 to-gray-900 text-white overflow-hidden relative">
+		<!-- Animated background -->
+		<div class="absolute inset-0 animate-float opacity-30">
+			<div
+				class="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"></div>
+			<div
+				class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-pink-500/20 rounded-full blur-3xl"></div>
+		</div>
 
-      <footer class="mt-auto text-white-50">
-        <p>
-          &copy; 2025
-          <a class="copylink" href="https://github.com/madrclouddev/"
-            >MaDrCloudDev</a
-          >
-        </p>
-      </footer>
-    </div>
+		<div
+			class="relative z-10 min-h-full flex flex-col justify-between p-6 max-w-6xl mx-auto">
+			<header class="glass-effect rounded-2xl p-6 mb-8">
+				<div
+					class="flex flex-col md:flex-row justify-between items-center">
+					<h1
+						class="text-3xl md:text-4xl font-bold text-gradient mb-4 md:mb-0">
+						<a
+							href="/"
+							class="hover:scale-105 transition-transform duration-300 inline-block"
+							>muralMaDrs</a
+						>
+					</h1>
+					<nav class="flex items-center space-x-6">
+						<a
+							class="text-white/70 hover:text-primary hover:scale-105 transition-all duration-300 font-medium"
+							href="/murals"
+							>Murals</a
+						>
+						<% if(!currentUser) { %>
+						<a
+							class="text-white/70 hover:text-primary hover:scale-105 transition-all duration-300 font-medium"
+							href="/login"
+							>Login</a
+						>
+						<a
+							class="bg-gradient-primary text-white px-6 py-2 rounded-full hover:scale-105 hover:shadow-lg transition-all duration-300 font-medium"
+							href="/register"
+							>Register</a
+						>
+						<% } else { %>
+						<a
+							class="text-white/70 hover:text-primary hover:scale-105 transition-all duration-300 font-medium"
+							href="/logout"
+							>Logout</a
+						>
+						<% } %>
+					</nav>
+				</div>
+			</header>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
-      integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+			<main class="flex-1 flex items-center justify-center">
+				<div
+					class="glass-effect rounded-3xl p-12 text-center max-w-4xl mx-auto animate-fadeInUp">
+					<h2
+						class="text-5xl md:text-7xl font-bold text-gradient mb-8 animate-glow">
+						Welcome to muralMaDrs!
+					</h2>
+					<p
+						class="text-xl md:text-2xl text-white/90 mb-12 leading-relaxed max-w-3xl mx-auto">
+						Jump in and explore public, outdoor murals.<br />
+						Share some you've created or spotted, review others!
+					</p>
+					<a
+						href="/murals"
+						class="inline-flex items-center gap-3 bg-white text-gray-900 px-10 py-4 rounded-full text-xl font-bold hover:scale-105 hover:shadow-2xl hover:bg-primary hover:text-white transition-all duration-300 group">
+						<i
+							class="fas fa-paint-brush group-hover:rotate-12 transition-transform duration-300"></i>
+						View Murals
+					</a>
+				</div>
+			</main>
+
+			<footer class="glass-effect rounded-2xl p-6 text-center">
+				<p class="text-white/70">
+					&copy; 2025
+					<a
+						class="ml-2 text-primary hover:text-secondary transition-colors duration-300 font-medium hover:underline"
+						href="https://github.com/madrclouddev/">
+						MaDrCloudDev
+					</a>
+				</p>
+			</footer>
+		</div>
+	</body>
 </html>
