@@ -1,7 +1,7 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
   "version": 2,
-  "name": "mural-madrs",
-  "builds": [{ "src": "api/index.ts", "use": "@vercel/node" }],
   "functions": {
     "api/index.ts": {
       "includeFiles": "public/**"
@@ -9,6 +9,6 @@
   },
   "routes": [
     { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "api/index.ts" }
+    { "src": "/(.*)", "dest": "/api/index.ts" }
   ]
 }
