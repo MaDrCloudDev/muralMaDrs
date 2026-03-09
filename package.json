@@ -5,9 +5,9 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "bun --watch src/server.ts",
-    "dev:full": "concurrently \"bun run build:css:watch\" \"bun --watch src/server.ts\"",
-    "start": "bun src/server.ts",
+    "dev": "bun --watch src/dev-server.ts",
+    "dev:full": "concurrently \"bun run build:css:watch\" \"bun --watch src/dev-server.ts\"",
+    "start": "bun src/dev-server.ts",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --ext .ts,.tsx,.js",
     "lint:fix": "eslint . --ext .ts,.tsx,.js --fix",

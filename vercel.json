@@ -1,15 +1,4 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "bunVersion": "1.x",
-  "framework": null,
-  "version": 2,
-  "functions": {
-    "api/index.ts": {
-      "includeFiles": "public/**"
-    }
-  },
-  "routes": [
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/api/index.ts" }
-  ]
+  "framework": null
 }

@@ -65,11 +65,10 @@ bun run dev
 
 ## Project layout
 ```text
-api/
-  index.ts            # Vercel serverless entry
 src/
   app.tsx             # Hono app and middleware
-  server.ts           # local runtime bootstrap
+  index.ts            # Vercel Hono entrypoint
+  dev-server.ts       # local Bun runtime bootstrap
   config/
   middleware/
   models/
@@ -82,12 +81,11 @@ public/
 ```
 
 ## Deployment (Vercel)
-This project deploys through `api/index.ts` using `@vercel/node`.
+This project deploys through Vercel's zero-config Hono support using `src/index.ts`.
 
 Current `vercel.json` behavior:
-- serves filesystem assets first
-- routes all remaining requests to the Hono handler
-- includes `public/**` files in the function bundle
+- disables framework preset auto-detection so Vercel does not treat the repo as an old Express app
+- lets Vercel serve `public/**` assets directly and route application requests to the Hono entrypoint
 
 ## Notes
 - If Cloudinary is not configured, uploads are written to `public/uploads`.
