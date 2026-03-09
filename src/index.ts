@@ -2,6 +2,7 @@ import { Hono } from 'hono';
 import { compress } from 'hono/compress';
 import { logger } from 'hono/logger';
 import { secureHeaders } from 'hono/secure-headers';
+import { serveStatic } from '@hono/node-server/serve-static';
 
 import { env } from './config/env.js';
 import { connectToDatabase } from './config/database.js';
@@ -17,6 +18,11 @@ const app = new Hono<AppBindings>();
 
 app.use('*', logger());
 app.use('*', compress());
+app.use('/stylesheets/*', serveStatic({ root: './public' }));
+app.use('/javascripts/*', serveStatic({ root: './public' }));
+app.use('/images/*', serveStatic({ root: './public' }));
+app.use('/uploads/*', serveStatic({ root: './public' }));
+app.use('/favicon.ico', serveStatic({ root: './public' }));
 app.use('*', async (_c, next) => {
 	await connectToDatabase();
 	await next();

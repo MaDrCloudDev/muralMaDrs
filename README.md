@@ -21,6 +21,7 @@ This version is the post-refactor codebase. The old Express app, the Bun runtime
 - cleaned up the project layout into `config`, `middleware`, `services`, `routes`, and `views`
 - tightened environment validation and response headers
 - switched Vercel to a bundled Hono serverless entry so deploys are predictable
+- refreshed the UI direction with modern typography and an image-led homepage hero
 
 ## Requirements
 - Node 22 or newer
@@ -100,6 +101,7 @@ src/
   services/
   views/
 public/
+  images/
   javascripts/
   stylesheets/
 api/
@@ -126,6 +128,10 @@ Production notes:
 - The Vercel build generates `api/app.mjs` during deploy. You should not commit build output to git just to deploy this app.
 
 You do not need to add custom install, build, or output settings in the Vercel dashboard unless you want to override what is already in the repo.
+
+## Media Credits
+- Homepage hero image source: https://www.pexels.com/photo/mosaics-on-urban-wall-9221566/
+- Pexels license: attribution is appreciated but not required.
 
 ## License
 MIT
