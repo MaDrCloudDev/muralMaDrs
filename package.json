@@ -1,34 +1,35 @@
 {
   "name": "mural-madrs",
   "version": "3.0.0",
-  "description": "Community mural discovery platform rebuilt with Bun, Hono, and TypeScript",
+  "description": "Community mural discovery platform rebuilt with Hono, TypeScript, and pnpm",
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "bun --watch src/dev-server.ts",
-    "dev:full": "concurrently \"bun run build:css:watch\" \"bun --watch src/dev-server.ts\"",
-    "start": "bun src/dev-server.ts",
+    "dev": "node --env-file=.env --watch --import tsx src/dev-server.ts",
+    "dev:full": "concurrently \"pnpm run build:css:watch\" \"pnpm run dev\"",
+    "start": "node --env-file=.env --import tsx src/dev-server.ts",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --ext .ts,.tsx,.js",
     "lint:fix": "eslint . --ext .ts,.tsx,.js --fix",
-    "build:css": "mkdir -p /tmp/bun-tmp /tmp/bun-install && BUN_TMPDIR=/tmp/bun-tmp BUN_INSTALL=/tmp/bun-install tailwindcss -i ./public/stylesheets/input.css -o ./public/stylesheets/output.css --minify",
-    "build:css:watch": "mkdir -p /tmp/bun-tmp /tmp/bun-install && BUN_TMPDIR=/tmp/bun-tmp BUN_INSTALL=/tmp/bun-install tailwindcss -i ./public/stylesheets/input.css -o ./public/stylesheets/output.css --watch"
+    "build:css": "tailwindcss -i ./public/stylesheets/input.css -o ./public/stylesheets/output.css --minify",
+    "build:css:watch": "tailwindcss -i ./public/stylesheets/input.css -o ./public/stylesheets/output.css --watch",
+    "build:vercel": "esbuild src/vercel.ts --bundle --platform=node --format=esm --target=node22 --banner:js=\"import { createRequire } from 'module'; const require = createRequire(import.meta.url);\" --outfile=api/index.mjs"
   },
   "keywords": [
     "hono",
-    "bun",
+    "pnpm",
     "typescript",
     "mongodb",
     "murals"
   ],
   "license": "ISC",
   "engines": {
-    "bun": ">=1.2.0"
+    "node": "22.x",
+    "pnpm": ">=9.0.0"
   },
   "dependencies": {
     "@hono/node-server": "^1.13.8",
     "cloudinary": "^2.5.1",
-    "dotenv": "^16.4.7",
     "hono": "^4.6.13",
     "mongoose": "^8.9.5",
     "passport-local-mongoose": "^8.0.0",
@@ -42,8 +43,10 @@
     "@typescript-eslint/eslint-plugin": "^8.18.2",
     "@typescript-eslint/parser": "^8.18.2",
     "concurrently": "^9.1.2",
+    "esbuild": "^0.27.3",
     "eslint": "^8.57.1",
     "tailwindcss": "^4.1.13",
+    "tsx": "^4.20.6",
     "typescript": "^5.7.2"
   }
 }

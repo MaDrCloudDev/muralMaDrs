@@ -1,5 +1,8 @@
 # Dependencies
 node_modules/
+package-lock.json
+bun.lock*
+pnpm-debug.log*
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -47,7 +50,10 @@ Thumbs.db
 # Temporary files
 tmp/
 temp/
+.pnpm-store/
 
-# Local uploads (development only)
+# Local and generated files
 public/uploads/
 .vercel
+api/
+mural-madrs-log-export-*.json

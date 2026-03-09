@@ -1,6 +1,6 @@
 import { serve } from '@hono/node-server';
 
-import app from './app.js';
+import app from './index.js';
 import { connectToDatabase } from './config/database.js';
 import { env } from './config/env.js';
 
