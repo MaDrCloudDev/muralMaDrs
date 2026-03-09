@@ -4,6 +4,6 @@
   "buildCommand": "pnpm run build:vercel",
   "routes": [
     { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/api/index.mjs" }
+    { "src": "/(.*)", "dest": "/api/index.ts" }
   ]
 }

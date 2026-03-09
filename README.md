@@ -102,9 +102,11 @@ src/
 public/
   javascripts/
   stylesheets/
+api/
+  index.ts        # thin Vercel wrapper
 ```
 
-The `api/` directory is generated during the Vercel build and is not checked in.
+`api/app.mjs` is generated during the Vercel build and is not checked in.
 
 ## Deploying to Vercel
 1. Import the repository into Vercel.
@@ -115,7 +117,7 @@ The `api/` directory is generated during the Vercel build and is not checked in.
 
 The repo already includes a [`vercel.json`](./vercel.json) file that:
 - runs the bundle build for the Vercel function
-- routes app traffic to the generated Hono handler
+- routes app traffic through the tracked `api/index.ts` wrapper
 - leaves static assets in `public/`
 
 You do not need to add custom install, build, or output settings in the Vercel dashboard unless you want to override what is already in the repo.

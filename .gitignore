@@ -55,5 +55,5 @@ temp/
 # Local and generated files
 public/uploads/
 .vercel
-api/
+api/app.mjs
 mural-madrs-log-export-*.json

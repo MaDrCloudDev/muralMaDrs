@@ -13,7 +13,7 @@
     "lint:fix": "eslint . --ext .ts,.tsx,.js --fix",
     "build:css": "tailwindcss -i ./public/stylesheets/input.css -o ./public/stylesheets/output.css --minify",
     "build:css:watch": "tailwindcss -i ./public/stylesheets/input.css -o ./public/stylesheets/output.css --watch",
-    "build:vercel": "esbuild src/vercel.ts --bundle --platform=node --format=esm --target=node22 --banner:js=\"import { createRequire } from 'module'; const require = createRequire(import.meta.url);\" --outfile=api/index.mjs"
+    "build:vercel": "esbuild src/vercel.ts --bundle --platform=node --format=esm --target=node22 --banner:js=\"import { createRequire } from 'module'; const require = createRequire(import.meta.url);\" --outfile=api/app.mjs"
   },
   "keywords": [
     "hono",
