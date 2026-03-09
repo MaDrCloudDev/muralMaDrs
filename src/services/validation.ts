@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { sanitizeText } from './sanitize';
+import { sanitizeText } from './sanitize.js';
 
 const cleanString = (min: number, max: number) =>
 	z

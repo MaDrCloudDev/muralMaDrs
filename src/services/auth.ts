@@ -4,10 +4,10 @@ import { deleteCookie, getCookie, setCookie } from 'hono/cookie';
 import type { Context } from 'hono';
 import type { Types } from 'mongoose';
 
-import { env } from '../config/env';
-import { Session } from '../models/session';
-import { User, type UserDocument } from '../models/user';
-import type { AppBindings } from '../types';
+import { env } from '../config/env.js';
+import { Session } from '../models/session.js';
+import { User, type UserDocument } from '../models/user.js';
+import type { AppBindings } from '../types.js';
 
 const SESSION_MAX_AGE = env.SESSION_TTL_DAYS * 24 * 60 * 60;
 

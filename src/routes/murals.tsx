@@ -1,19 +1,19 @@
 import { Hono } from 'hono';
 import { Types } from 'mongoose';
 
-import { Mural } from '../models/mural';
-import { Review } from '../models/review';
-import { deleteImage, extractFilesFromBody, parseMultipartBody, uploadImages } from '../services/uploads';
-import { geocodeLocation } from '../services/geocoding';
-import { pushFlash } from '../services/flash';
-import { getStringArray, getStringField } from '../services/http';
-import { muralInputSchema, reviewInputSchema } from '../services/validation';
-import type { AppBindings } from '../types';
-import { requireAuth } from '../middleware/auth';
-import { MuralFormPage } from '../views/pages/murals/form';
-import { MuralsIndexPage } from '../views/pages/murals/index';
-import { MuralShowPage } from '../views/pages/murals/show';
-import { renderPage } from '../views/render';
+import { Mural } from '../models/mural.js';
+import { Review } from '../models/review.js';
+import { deleteImage, extractFilesFromBody, parseMultipartBody, uploadImages } from '../services/uploads.js';
+import { geocodeLocation } from '../services/geocoding.js';
+import { pushFlash } from '../services/flash.js';
+import { getStringArray, getStringField } from '../services/http.js';
+import { muralInputSchema, reviewInputSchema } from '../services/validation.js';
+import type { AppBindings } from '../types.js';
+import { requireAuth } from '../middleware/auth.js';
+import { MuralFormPage } from '../views/pages/murals/form.js';
+import { MuralsIndexPage } from '../views/pages/murals/index.js';
+import { MuralShowPage } from '../views/pages/murals/show.js';
+import { renderPage } from '../views/render.js';
 
 export const muralRoutes = new Hono<AppBindings>();
 

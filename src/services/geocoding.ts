@@ -1,4 +1,4 @@
-import { env } from '../config/env';
+import { env } from '../config/env.js';
 
 const DEFAULT_COORDINATES: [number, number] = [-98.5795, 39.8283];
 

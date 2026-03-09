@@ -1,8 +1,8 @@
 import { Hono } from 'hono';
 
-import { renderPage } from '../views/render';
-import { HomePage } from '../views/pages/home';
-import type { AppBindings } from '../types';
+import { renderPage } from '../views/render.js';
+import { HomePage } from '../views/pages/home.js';
+import type { AppBindings } from '../types.js';
 
 export const homeRoutes = new Hono<AppBindings>();
 

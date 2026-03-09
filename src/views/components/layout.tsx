@@ -1,10 +1,10 @@
 import type { Child, FC } from 'hono/jsx';
 
-import type { UserDocument } from '../../models/user';
-import type { FlashMessages } from '../../types';
-import { Flash } from './flash';
-import { Footer } from './footer';
-import { Nav } from './nav';
+import type { UserDocument } from '../../models/user.js';
+import type { FlashMessages } from '../../types.js';
+import { Flash } from './flash.js';
+import { Footer } from './footer.js';
+import { Nav } from './nav.js';
 
 interface LayoutProps {
 	title: string;

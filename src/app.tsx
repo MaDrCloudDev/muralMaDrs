@@ -4,14 +4,14 @@ import { logger } from 'hono/logger';
 import { secureHeaders } from 'hono/secure-headers';
 import { serveStatic } from '@hono/node-server/serve-static';
 
-import { env } from './config/env';
-import { loadCurrentUser } from './middleware/auth';
-import { authRoutes } from './routes/auth';
-import { homeRoutes } from './routes/home';
-import { muralRoutes } from './routes/murals';
-import type { AppBindings } from './types';
-import { ErrorPage } from './views/pages/error';
-import { renderPage } from './views/render';
+import { env } from './config/env.js';
+import { loadCurrentUser } from './middleware/auth.js';
+import { authRoutes } from './routes/auth.js';
+import { homeRoutes } from './routes/home.js';
+import { muralRoutes } from './routes/murals.js';
+import type { AppBindings } from './types.js';
+import { ErrorPage } from './views/pages/error.js';
+import { renderPage } from './views/render.js';
 
 const app = new Hono<AppBindings>();
 

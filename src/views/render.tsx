@@ -1,10 +1,10 @@
 import type { Child } from 'hono/jsx';
 import type { Context } from 'hono';
 
-import { env } from '../config/env';
-import { consumeFlash } from '../services/flash';
-import type { AppBindings } from '../types';
-import { Layout } from './components/layout';
+import { env } from '../config/env.js';
+import { consumeFlash } from '../services/flash.js';
+import type { AppBindings } from '../types.js';
+import { Layout } from './components/layout.js';
 
 interface RenderPageOptions {
 	title: string;

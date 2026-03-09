@@ -5,8 +5,8 @@ import path from 'node:path';
 import { v2 as cloudinary } from 'cloudinary';
 import type { Context } from 'hono';
 
-import { env } from '../config/env';
-import type { AppBindings } from '../types';
+import { env } from '../config/env.js';
+import type { AppBindings } from '../types.js';
 
 const uploadRoot = path.join(process.cwd(), 'public', 'uploads');
 

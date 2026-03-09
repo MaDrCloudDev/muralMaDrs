@@ -1,8 +1,8 @@
 import type { FC } from 'hono/jsx';
 
-import type { MuralDocument } from '../../../models/mural';
-import type { ReviewDocument } from '../../../models/review';
-import type { UserDocument } from '../../../models/user';
+import type { MuralDocument } from '../../../models/mural.js';
+import type { ReviewDocument } from '../../../models/review.js';
+import type { UserDocument } from '../../../models/user.js';
 
 interface PopulatedReview extends Omit<ReviewDocument, 'author'> {
 	author: Pick<UserDocument, '_id' | 'username'>;

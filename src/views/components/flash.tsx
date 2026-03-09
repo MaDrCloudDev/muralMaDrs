@@ -1,6 +1,6 @@
 import type { FC } from 'hono/jsx';
 
-import type { FlashMessages } from '../../types';
+import type { FlashMessages } from '../../types.js';
 
 interface FlashProps {
 	messages: FlashMessages;

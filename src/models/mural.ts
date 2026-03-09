@@ -1,6 +1,6 @@
 import { model, Schema, type HydratedDocument, type Types } from 'mongoose';
 
-import { Review } from './review';
+import { Review } from './review.js';
 
 export interface MuralImage {
 	url: string;

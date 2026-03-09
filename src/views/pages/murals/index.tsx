@@ -1,7 +1,7 @@
 import type { FC } from 'hono/jsx';
 
-import type { MuralDocument } from '../../../models/mural';
-import type { UserDocument } from '../../../models/user';
+import type { MuralDocument } from '../../../models/mural.js';
+import type { UserDocument } from '../../../models/user.js';
 
 interface MuralsIndexPageProps {
 	murals: Array<

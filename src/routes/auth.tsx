@@ -1,14 +1,14 @@
 import { Hono } from 'hono';
 
-import { User } from '../models/user';
-import { createSession, destroySession, authenticateLocalUser } from '../services/auth';
-import { pushFlash } from '../services/flash';
-import { getStringField, isSafeReturnTo } from '../services/http';
-import { loginInputSchema, registerInputSchema } from '../services/validation';
-import type { AppBindings } from '../types';
-import { LoginPage } from '../views/pages/auth/login';
-import { RegisterPage } from '../views/pages/auth/register';
-import { renderPage } from '../views/render';
+import { User } from '../models/user.js';
+import { createSession, destroySession, authenticateLocalUser } from '../services/auth.js';
+import { pushFlash } from '../services/flash.js';
+import { getStringField, isSafeReturnTo } from '../services/http.js';
+import { loginInputSchema, registerInputSchema } from '../services/validation.js';
+import type { AppBindings } from '../types.js';
+import { LoginPage } from '../views/pages/auth/login.js';
+import { RegisterPage } from '../views/pages/auth/register.js';
+import { renderPage } from '../views/render.js';
 
 export const authRoutes = new Hono<AppBindings>();
 

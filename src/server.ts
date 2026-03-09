@@ -1,8 +1,8 @@
 import { serve } from '@hono/node-server';
 
-import app from './app';
-import { connectToDatabase } from './config/database';
-import { env } from './config/env';
+import app from './app.js';
+import { connectToDatabase } from './config/database.js';
+import { env } from './config/env.js';
 
 async function bootstrap(): Promise<void> {
 	await connectToDatabase();

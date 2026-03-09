@@ -1,4 +1,4 @@
-import type { UserDocument } from './models/user';
+import type { UserDocument } from './models/user.js';
 
 export interface FlashMessages {
 	success: string[];

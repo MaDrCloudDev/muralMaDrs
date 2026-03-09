@@ -1,8 +1,8 @@
 import { createMiddleware } from 'hono/factory';
 
-import { getUserFromSession } from '../services/auth';
-import { pushFlash } from '../services/flash';
-import type { AppBindings } from '../types';
+import { getUserFromSession } from '../services/auth.js';
+import { pushFlash } from '../services/flash.js';
+import type { AppBindings } from '../types.js';
 
 export const loadCurrentUser = createMiddleware<AppBindings>(
 	async (c, next) => {

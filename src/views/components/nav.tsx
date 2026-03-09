@@ -1,6 +1,6 @@
 import type { FC } from 'hono/jsx';
 
-import type { UserDocument } from '../../models/user';
+import type { UserDocument } from '../../models/user.js';
 
 interface NavProps {
 	currentPath: string;

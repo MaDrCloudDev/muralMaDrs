@@ -1,6 +1,6 @@
 import type { FC } from 'hono/jsx';
 
-import type { MuralDocument } from '../../../models/mural';
+import type { MuralDocument } from '../../../models/mural.js';
 
 interface MuralFormPageProps {
 	mode: 'create' | 'edit';

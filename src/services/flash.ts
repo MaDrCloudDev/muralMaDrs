@@ -1,7 +1,7 @@
 import { deleteCookie, getCookie, setCookie } from 'hono/cookie';
 import type { Context } from 'hono';
 
-import type { AppBindings, FlashMessages } from '../types';
+import type { AppBindings, FlashMessages } from '../types.js';
 
 const FLASH_COOKIE_NAME = 'muralmadrs_flash';
 
