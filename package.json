@@ -1,59 +1,49 @@
 {
   "name": "mural-madrs",
-  "version": "2.0.0",
-  "description": "A modern web application for discovering and sharing street murals",
-  "main": "app.js",
+  "version": "3.0.0",
+  "description": "Community mural discovery platform rebuilt with Bun, Hono, and TypeScript",
   "type": "module",
+  "private": true,
   "scripts": {
-    "start": "node app.js",
-    "dev": "npm run build:css:prod && node app.js",
-    "dev:watch": "concurrently \"npm run build:css:watch\" \"nodemon app.js\"",
-    "build:css": "tailwindcss -i ./public/stylesheets/input.css -o ./public/stylesheets/output.css",
-    "build:css:watch": "tailwindcss -i ./public/stylesheets/input.css -o ./public/stylesheets/output.css --watch",
-    "build:css:prod": "tailwindcss -i ./public/stylesheets/input.css -o ./public/stylesheets/output.css --minify",
-    "lint": "eslint . --ext .js",
-    "lint:fix": "eslint . --ext .js --fix",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "bun --watch src/server.ts",
+    "dev:full": "concurrently \"bun run build:css:watch\" \"bun --watch src/server.ts\"",
+    "start": "bun src/server.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --ext .ts,.tsx,.js",
+    "lint:fix": "eslint . --ext .ts,.tsx,.js --fix",
+    "build:css": "mkdir -p /tmp/bun-tmp /tmp/bun-install && BUN_TMPDIR=/tmp/bun-tmp BUN_INSTALL=/tmp/bun-install tailwindcss -i ./public/stylesheets/input.css -o ./public/stylesheets/output.css --minify",
+    "build:css:watch": "mkdir -p /tmp/bun-tmp /tmp/bun-install && BUN_TMPDIR=/tmp/bun-tmp BUN_INSTALL=/tmp/bun-install tailwindcss -i ./public/stylesheets/input.css -o ./public/stylesheets/output.css --watch"
   },
   "keywords": [
-    "murals",
-    "art",
-    "express",
+    "hono",
+    "bun",
+    "typescript",
     "mongodb",
-    "photography"
+    "murals"
   ],
-  "author": "",
   "license": "ISC",
+  "engines": {
+    "bun": ">=1.2.0"
+  },
   "dependencies": {
-    "@mapbox/mapbox-sdk": "^0.15.3",
-    "@tailwindcss/cli": "^4.1.13",
-    "cloudinary": "^1.41.0",
-    "connect-flash": "^0.1.1",
-    "connect-mongo": "^5.1.0",
-    "dotenv": "^16.3.1",
-    "ejs": "^3.1.9",
-    "ejs-mate": "^4.0.0",
-    "express": "^4.18.2",
-    "express-mongo-sanitize": "^2.2.0",
-    "express-session": "^1.18.0",
-    "helmet": "^7.1.0",
-    "joi": "^17.11.0",
-    "method-override": "^3.0.0",
-    "mongoose": "^8.7.0",
-    "multer": "^2.0.0-rc.4",
-    "multer-storage-cloudinary": "^4.0.0",
-    "passport": "^0.7.0",
-    "passport-local": "^1.0.0",
+    "@hono/node-server": "^1.13.8",
+    "cloudinary": "^2.5.1",
+    "dotenv": "^16.4.7",
+    "hono": "^4.6.13",
+    "mongoose": "^8.9.5",
     "passport-local-mongoose": "^8.0.0",
-    "sanitize-html": "^2.11.0",
-    "serve-favicon": "^2.5.0",
-    "tailwindcss": "^4.1.13"
+    "sanitize-html": "^2.13.1",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
-    "eslint": "^8.52.0",
-    "nodemon": "^3.0.1"
-  },
-  "engines": {
-    "node": ">=18.0.0"
+    "@tailwindcss/cli": "^4.1.13",
+    "@types/node": "^22.10.2",
+    "@types/sanitize-html": "^2.13.0",
+    "@typescript-eslint/eslint-plugin": "^8.18.2",
+    "@typescript-eslint/parser": "^8.18.2",
+    "concurrently": "^9.1.2",
+    "eslint": "^8.57.1",
+    "tailwindcss": "^4.1.13",
+    "typescript": "^5.7.2"
   }
 }

@@ -1,0 +1,115 @@
+/* global mapboxgl */
+
+const mapContainer = document.getElementById('murals-map');
+const tokenMeta = document.querySelector('meta[name="mapbox-token"]');
+const dataElement = document.getElementById('map-features');
+const DEBUG_PREFIX = '[muralMaDrs map:index]';
+
+function showMapMessage(target, message, details = '') {
+	const detailText = details ? `<small>${details}</small>` : '';
+	target.innerHTML = `<p class="muted map-fallback">${message}${detailText}</p>`;
+}
+
+function decodeHtmlEntities(value) {
+	const textarea = document.createElement('textarea');
+	textarea.innerHTML = value;
+	return textarea.value;
+}
+
+function parseEmbeddedJson(rawText) {
+	const trimmed = (rawText ?? '').trim();
+	if (!trimmed) {
+		return null;
+	}
+
+	try {
+		return JSON.parse(trimmed);
+	} catch {
+		try {
+			return JSON.parse(decodeHtmlEntities(trimmed));
+		} catch {
+			return null;
+		}
+	}
+}
+
+function logDebug(message, payload) {
+	if (payload !== undefined) {
+		console.error(`${DEBUG_PREFIX} ${message}`, payload);
+		return;
+	}
+	console.error(`${DEBUG_PREFIX} ${message}`);
+}
+
+if (mapContainer && tokenMeta && dataElement) {
+	const mapboxToken = tokenMeta.getAttribute('content') ?? '';
+	let parsedData = null;
+	const tokenPrefix = mapboxToken.slice(0, 3);
+	const tokenLength = mapboxToken.length;
+	logDebug(`boot tokenPrefix=${tokenPrefix} tokenLength=${tokenLength}`);
+
+	parsedData = parseEmbeddedJson(dataElement.textContent ?? '');
+	if (!parsedData) {
+		const rawPreview = (dataElement.textContent ?? '').slice(0, 160);
+		logDebug('Map JSON parse failed');
+		logDebug('Raw JSON preview', rawPreview);
+		showMapMessage(mapContainer, 'Map data could not be parsed.', 'Embedded data was invalid JSON.');
+	}
+
+	if (!window.mapboxgl) {
+		logDebug('window.mapboxgl unavailable');
+		showMapMessage(mapContainer, 'Map library failed to load.');
+	} else if (!mapboxToken) {
+		logDebug('MAPBOX_TOKEN missing in page meta');
+		showMapMessage(mapContainer, 'Map is disabled until a MAPBOX_TOKEN is configured.');
+	} else if (!parsedData?.features?.length) {
+		logDebug('No GeoJSON features available', parsedData);
+		showMapMessage(mapContainer, 'No mapped mural locations are available yet.');
+	} else {
+		try {
+			mapboxgl.accessToken = mapboxToken;
+
+			const map = new mapboxgl.Map({
+				container: mapContainer,
+				style: 'mapbox://styles/mapbox/dark-v11',
+				center: [-98.5795, 39.8283],
+				zoom: 3,
+			});
+
+			map.addControl(new mapboxgl.NavigationControl());
+			map.on('load', () => {
+				console.info(`${DEBUG_PREFIX} map load success`);
+				map.resize();
+			});
+			map.on('error', (event) => {
+				const reason =
+					event?.error?.message ||
+					event?.error?.status ||
+					event?.type ||
+					'unknown map error';
+				logDebug('Mapbox emitted error event', event);
+				showMapMessage(
+					mapContainer,
+					'Map failed to render.',
+					`Reason: ${String(reason)}`
+				);
+			});
+
+			for (const feature of parsedData.features) {
+				const marker = new mapboxgl.Marker({ color: '#0f766e' })
+					.setLngLat(feature.geometry.coordinates)
+					.setPopup(new mapboxgl.Popup({ offset: 24 }).setHTML(feature.properties.popupMarkup))
+					.addTo(map);
+
+				marker.getElement().setAttribute('aria-label', feature.properties.title);
+			}
+		} catch (error) {
+			logDebug('Map initialization exception', error);
+			showMapMessage(
+				mapContainer,
+				'Map failed to initialize.',
+				error instanceof Error ? error.message : String(error)
+			);
+		}
+	}
+}

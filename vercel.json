@@ -1,10 +1,14 @@
 {
   "version": 2,
   "name": "mural-madrs",
-  "builds": [
-    { "src": "app.js", "use": "@vercel/node" }
-  ],
+  "builds": [{ "src": "api/index.ts", "use": "@vercel/node" }],
+  "functions": {
+    "api/index.ts": {
+      "includeFiles": "public/**"
+    }
+  },
   "routes": [
-    { "src": "/(.*)", "dest": "app.js" }
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "api/index.ts" }
   ]
 }

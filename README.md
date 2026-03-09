@@ -1,145 +1,98 @@
-# [muralMaDrs](https://muralmadrs.madr.io)
-## [Render mirror](https://muralmadrs.onrender.com/)
-### Note: The Render mirror takes some time to wake up. Give it a minute. I'm in the process of updating the Vercel mirror.
+# muralMaDrs
 
-# MuralMaDrs
+muralMaDrs is a community mural directory for discovering, sharing, and reviewing street art.
 
-A modern MVC web application for discovering and sharing street murals built with Express.js, MongoDB, and EJS.
+## Stack
+- Runtime: Bun
+- Server: Hono
+- Language: TypeScript
+- Database: MongoDB with Mongoose
+- Views: Server-rendered TSX
+- Styling: Tailwind CSS v4
+- Maps: Mapbox GL JS
+- Uploads: Cloudinary with local fallback
 
-## 🚀 Features
+## Requirements
+- Bun 1.2+
+- MongoDB instance
+- Optional Mapbox token for maps and geocoding
+- Optional Cloudinary credentials for hosted image uploads
 
-- **User Authentication**: Secure registration and login system
-- **Mural Management**: Create, view, edit, and delete mural entries
-- **Image Upload**: Upload multiple images via Cloudinary integration
-- **Interactive Maps**: Location-based mural discovery with Mapbox
-- **Reviews & Ratings**: Community-driven mural reviews
-- **Responsive Design**: Mobile-friendly Bootstrap interface
-- **Security**: Built-in protection against common web vulnerabilities
-
-## 🛠️ Tech Stack
-
-- **Backend**: Node.js 18+, Express.js 4.18+
-- **Database**: MongoDB with Mongoose 7.6+
-- **Authentication**: Passport.js with local strategy
-- **File Upload**: Multer 2.0+ with Cloudinary storage
-- **Templating**: EJS with EJS-Mate
-- **Styling**: Bootstrap 5
-- **Maps**: Mapbox GL JS
-- **Security**: Helmet, express-mongo-sanitize, Joi validation
-
-## 📋 Prerequisites
-
-- Node.js 18.0.0 or higher
-- MongoDB (local or cloud instance)
-- Cloudinary account (for image uploads)
-- Mapbox account (for geocoding and maps)
-
-## 🔧 Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd muralMaDrs
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Set up environment variables**
-   ```bash
-   cp .env.example .env
-   ```
-   
-   Edit `.env` with your configuration:
-   ```env
-   DB_URL=mongodb://localhost:27017/mural-madrs
-   SECRET=your-super-secret-session-key
-   CLOUDINARY_CLOUD_NAME=your-cloudinary-cloud-name
-   CLOUDINARY_KEY=your-cloudinary-api-key
-   CLOUDINARY_SECRET=your-cloudinary-api-secret
-   MAPBOX_TOKEN=your-mapbox-access-token
-   NODE_ENV=development
-   PORT=3000
-   ```
-
-4. **Start the application**
-   ```bash
-   # Development mode with auto-restart
-   npm run dev
-   
-   # Production mode
-   npm start
-   ```
-
-5. **Visit the application**
-   Open your browser to `http://localhost:3000`
-
-## 🔑 Environment Variables
-
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `DB_URL` | MongoDB connection string | Yes |
-| `SECRET` | Session secret key | Yes |
-| `CLOUDINARY_CLOUD_NAME` | Cloudinary cloud name | Yes |
-| `CLOUDINARY_KEY` | Cloudinary API key | Yes |
-| `CLOUDINARY_SECRET` | Cloudinary API secret | Yes |
-| `MAPBOX_TOKEN` | Mapbox access token | Optional* |
-| `NODE_ENV` | Environment (development/production) | No |
-| `PORT` | Server port | No |
-
-*Note: Mapbox token is optional but recommended for full functionality. Without it, default coordinates will be used.
-
-## 📁 Project Structure
-
-```
-muralMaDrs/
-├── controllers/          # Route controllers
-├── models/              # Mongoose models
-├── routes/              # Express routes
-├── views/               # EJS templates
-├── public/              # Static assets
-├── utils/               # Utility functions
-├── cloudinary/          # Cloudinary configuration
-├── middleware.js        # Custom middleware
-├── schemas.js           # Joi validation schemas
-└── app.js              # Main application file
+## Local setup
+1. Install dependencies:
+```bash
+bun install
 ```
 
-## 🚦 Available Scripts
+2. Create environment file:
+```bash
+cp .env.example .env
+```
 
-- `npm start` - Start the production server
-- `npm run dev` - Start development server with nodemon
-- `npm test` - Run tests (placeholder)
+3. Update `.env` with your values.
 
-## 🔒 Security Features
+4. Start development server:
+```bash
+bun run dev
+```
 
-- **Helmet**: Security headers
-- **MongoDB Sanitization**: Prevents NoSQL injection
-- **Input Validation**: Joi schema validation
-- **HTML Sanitization**: Prevents XSS attacks
-- **CSRF Protection**: Built into forms
-- **Secure Sessions**: HTTP-only cookies
+5. Open:
+- `http://localhost:3000`
 
-## 🤝 Contributing
+## Scripts
+- `bun run dev`: start server in watch mode
+- `bun run dev:full`: start server and CSS watcher
+- `bun run start`: start server without watch mode
+- `bun run typecheck`: TypeScript check
+- `bun run lint`: ESLint check
+- `bun run lint:fix`: ESLint auto-fix
+- `bun run build:css`: compile and minify CSS
+- `bun run build:css:watch`: watch and rebuild CSS
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+## Environment variables
+| Variable | Required | Purpose |
+| --- | --- | --- |
+| `NODE_ENV` | No | `development`, `test`, or `production` |
+| `PORT` | No | HTTP port, default `3000` |
+| `DB_URL` | Yes | MongoDB connection string |
+| `SECRET` | Yes | Session signing secret |
+| `SESSION_COOKIE_NAME` | No | Session cookie key |
+| `SESSION_TTL_DAYS` | No | Session TTL in days |
+| `MAPBOX_TOKEN` | Optional | Enables map rendering and geocoding |
+| `CLOUDINARY_CLOUD_NAME` | Optional | Cloudinary uploads |
+| `CLOUDINARY_KEY` | Optional | Cloudinary uploads |
+| `CLOUDINARY_SECRET` | Optional | Cloudinary uploads |
 
-## 📝 License
+## Project layout
+```text
+api/
+  index.ts            # Vercel serverless entry
+src/
+  app.tsx             # Hono app and middleware
+  server.ts           # local runtime bootstrap
+  config/
+  middleware/
+  models/
+  routes/
+  services/
+  views/
+public/
+  javascripts/
+  stylesheets/
+```
 
-This project is licensed under the ISC License - see the [LICENSE.md](LICENSE.md) file for details.
+## Deployment (Vercel)
+This project deploys through `api/index.ts` using `@vercel/node`.
 
-## 🆕 Recent Updates (v2.0.0)
+Current `vercel.json` behavior:
+- serves filesystem assets first
+- routes all remaining requests to the Hono handler
+- includes `public/**` files in the function bundle
 
-- **ES Modules**: Converted from CommonJS to modern ES modules
-- **Updated Dependencies**: All packages updated to latest versions
-- **Modern JavaScript**: Uses const/let, arrow functions, async/await
-- **Improved Security**: Updated Helmet and security configurations
-- **Better Error Handling**: Enhanced error handling patterns
-- **MongoDB 7.x**: Updated to latest Mongoose with modern connection syntax
-- **Node.js 18+**: Requires modern Node.js version
+## Notes
+- If Cloudinary is not configured, uploads are written to `public/uploads`.
+- If Mapbox is not configured, map UI falls back gracefully.
+- Keep `NODE_ENV=development` for local work unless you are testing production behavior.
+
+## License
+ISC
