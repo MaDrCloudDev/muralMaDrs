@@ -128,4 +128,4 @@ Production notes:
 You do not need to add custom install, build, or output settings in the Vercel dashboard unless you want to override what is already in the repo.
 
 ## License
-ISC
+MIT
