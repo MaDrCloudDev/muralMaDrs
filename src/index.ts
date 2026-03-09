@@ -4,6 +4,7 @@ import { logger } from 'hono/logger';
 import { secureHeaders } from 'hono/secure-headers';
 
 import { env } from './config/env.js';
+import { connectToDatabase } from './config/database.js';
 import { loadCurrentUser } from './middleware/auth.js';
 import { authRoutes } from './routes/auth.js';
 import { homeRoutes } from './routes/home.js';
@@ -16,6 +17,10 @@ const app = new Hono<AppBindings>();
 
 app.use('*', logger());
 app.use('*', compress());
+app.use('*', async (_c, next) => {
+	await connectToDatabase();
+	await next();
+});
 app.use(
 	'*',
 	secureHeaders({

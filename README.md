@@ -71,7 +71,7 @@ pnpm run dev:full
 - `pnpm run lint:fix` runs ESLint with automatic fixes
 - `pnpm run build:css` compiles and minifies the Tailwind output
 - `pnpm run build:css:watch` watches and rebuilds CSS
-- `pnpm run build:vercel` builds the bundled Vercel function used in production
+- `pnpm run build:vercel` builds the Vercel function entry used in production
 
 ## Environment variables
 | Variable | Required | Notes |
@@ -112,13 +112,18 @@ api/
 1. Import the repository into Vercel.
 2. Set `Framework Preset` to `Other`.
 3. Add the environment variables from `.env.example`.
-4. If you want image uploads in production, add the Cloudinary credentials. The local upload fallback writes to `public/uploads`, which is fine for local development but not for a serverless filesystem.
-5. Deploy.
+4. Make sure `DB_URL` is reachable from Vercel. The serverless entry now opens and reuses the Mongo connection automatically for each function instance.
+5. If you want image uploads in production, add the Cloudinary credentials. The local upload fallback writes to `public/uploads`, which is fine for local development but not for a serverless filesystem.
+6. Deploy.
 
 The repo already includes a [`vercel.json`](./vercel.json) file that:
 - runs the bundle build for the Vercel function
 - routes app traffic through the tracked `api/index.ts` wrapper
 - leaves static assets in `public/`
+
+Production notes:
+- Mongoose indexes are not built automatically in production. If you add or change indexes, create them explicitly in Mongo before relying on them.
+- The Vercel build generates `api/app.mjs` during deploy. You should not commit build output to git just to deploy this app.
 
 You do not need to add custom install, build, or output settings in the Vercel dashboard unless you want to override what is already in the repo.
 
