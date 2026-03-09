@@ -1,7 +1,3 @@
-# [muralMaDrs](https://muralmadrs.madr.io)
-## [Render mirror](https://muralmadrs.onrender.com/)
-### Note: The Render mirror takes some time to wake up. Give it a minute. I'm in the process of updating the Vercel mirror.
-
 # MuralMaDrs
 
 A modern MVC web application for discovering and sharing street murals built with Express.js, MongoDB, and EJS.
